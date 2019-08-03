@@ -1,0 +1,241 @@
+/* #323232 */
+.home {
+    text-align: center;
+    padding: 25px 5px;
+    color: white;
+    background-color: #39465d;
+    font-weight: 500;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.textR {
+    justify-self: right;
+}
+
+#rank_competitive {
+    height: 40px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: 100px 40px;
+}
+
+#rank_wingman {
+    height: 40px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: 100px 40px;
+}
+
+#country {
+    height: 32px;
+    width: 32px;
+    background-image: url('../img/countries/ukraine.png');
+    background-repeat: no-repeat;
+    background-size: 32px;
+    margin-right: 15px;
+}
+
+#avatar {
+    height: 210px;
+    width: 210px;
+    background-image: url('../img/avatar.png');
+    background-repeat: no-repeat;
+    background-size: 210px;
+    border-radius: 5px;
+
+}
+
+#profile {
+    height: auto;
+    width: auto;
+}
+
+.graphTitle {
+    font-size: 20pt;
+}
+
+#profileIcon {
+}
+
+#profileName {
+    display: flex;
+    flex-direction: row;
+    font-size: 20pt;
+}
+
+#profileTable {
+}
+
+#profileCSGO > * {
+    text-align: left;
+    align-items: center;
+}
+
+#profileInfo > tbody > tr {
+    height: 50px;
+    width: 800px;
+}
+
+#profileCSGO {
+    display: grid;
+    grid-template-rows: repeat(3, 50px);
+}
+
+#profileCSGO > div {
+    display: grid;
+    grid-template-columns: 120px 100px 60px 80px 80px 50px;
+}
+
+#profileCSGOheader > div {
+    text-align: center;
+    align-items: center;
+}
+
+#graphs {
+    margin-top: 50px;
+
+}
+
+#lastMatches {
+    text-align: left;
+}
+
+table#matchesTable {
+    width: 500px;
+    border-collapse: collapse;
+}
+
+table#matchesTable > tbody > tr {
+    height: 70px;
+    border-bottom: 1px solid #cccccc;
+}
+
+table#matchesTable > tbody > tr#matchesHeader {
+    border-bottom: 1px solid #aaaaaa;
+    height: 40px;
+}
+
+.map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+}
+
+.mapIcon {
+    height: 50px;
+    width: 50px;
+    background-image: url('../img/map_icons/collection_icon_none.png');
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    padding-right: 5px;
+}
+
+.mapName {
+    width: 150px;
+}
+
+.gameDate {
+    width: 100px;
+}
+
+.gameDuration {
+    width: 100px;
+}
+
+.gameTime {
+    width: 75px;
+}
+
+.gameStatus {
+    width: 90px;
+}
+
+.statusInfo {
+    padding: 4px 8px;
+    margin-left: 3px;
+    border-radius: 3px;
+    font-weight: 600;
+    color: white;
+}
+
+.lose {
+    background-color: #e43437;
+}
+
+.loseBorder {
+    border-color: #e43437;
+}
+
+.win {
+    background-color: #05da2e;
+}
+
+.winBorder {
+    border-color: #05da2e;
+}
+
+.draw {
+    background-color: #efef00;
+}
+
+.drawBorder {
+    border-color: #efef00;
+}
+
+.dust2 {
+    height: 50px;
+    width: 50px;
+    background-image: url('../img/dust2.png');
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+
+@media only screen and (max-device-width: 961px) {
+    #graphs > * {
+        display: none;
+    }
+
+    #graphs {
+        display: none;
+    }
+
+    #profileCSGO.col {
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+    }
+
+    #profileCSGO.row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #content > div {
+        padding: 0;
+    }
+
+    #profileCSGO {
+        display: grid;
+        grid-template-columns: 90px auto auto !important;
+    }
+
+    #profileCSGO > div {
+        display: grid;
+        grid-template-rows: 30px 40px 30px 30px 30px 30px !important;
+    }
+
+    #profileInfo {
+        width: 320px;
+    }
+}

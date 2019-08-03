@@ -1,0 +1,471 @@
+.gamesList {
+    width: 100%;
+}
+
+.gameBlock {
+    margin-bottom: 20px;
+}
+
+#paginator{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#paginator > div{
+    padding: 5px 8px;
+    border-radius: 3px;
+    background-color: #222b3a;
+    color: white;
+    margin: 0 5px;
+}
+
+.games {
+    text-align: center;
+    padding: 25px 5px;
+    color: white;
+    background-color: #39465d;
+    font-weight: 500;
+}
+
+.game {
+    display: flex;
+    padding: 15.5px 0;
+    background-color: #dddddd;
+    border-radius: 2px;
+    font-family: 'Roboto', sans-serif;
+    z-index: 100;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 4px 5px;
+    border-left: 3px solid;
+    opacity: 0;
+}
+
+.gameStat {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-between;
+}
+
+.gameStat > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.map {
+    display: flex;
+    align-items: center;
+}
+
+.map > div {
+    padding-right: 20px;
+}
+
+.mapIcon {
+    height: 50px;
+    width: 50px;
+    background-image: url('../img/map_icons/collection_icon_none.png');
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+
+.screen {
+    width: 480px;
+    height: 270px;
+    background-image: url('../img/1080p/default.png');
+    background-repeat: no-repeat;
+    background-size: 480px 270px;
+    border-radius: 6px;
+}
+
+.screenWrapper {
+    width: 528px;
+    height: 270px;
+    padding: 0 5px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.mode {
+    font-weight: bold;
+}
+
+.more > a {
+    display: inline-block;
+}
+
+.title {
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.gameMode {
+    width: 200px;
+}
+
+.gameMode > div {
+}
+
+.gameTime {
+    width: 300px
+}
+
+.gameTime > div {
+}
+
+.gameStatus {
+    width: 150px;
+}
+
+.gameNumber {
+    text-align: center;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    align-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.gameStat {
+    flex: 1;
+}
+
+.duration > span {
+    margin-right: 10px;
+}
+
+.more {
+    max-width: 30px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: center !important;
+    font-size: 24pt;
+    margin-right: 20px;
+    color: #2b323e;
+}
+
+.arrow {
+    width: 25px;
+    height: 25px;
+    /*background-color: #fff; */
+    margin-right: 10px;
+    background-image: url('../img/arrow.png');
+    background-size: 25px;
+}
+
+.unimportant {
+    color: #b0b0b0;
+}
+
+.banned {
+    color: #ff4400 !important;
+}
+
+.notafter {
+    color: #990008 !important;
+}
+
+.statusInfo {
+    padding: 4px 8px;
+    margin-left: 3px;
+    border-radius: 3px;
+    font-weight: 600;
+    color: white;
+}
+
+.lose {
+    background-color: #e43437;
+}
+
+.loseBorder {
+    border-color: #e43437;
+}
+
+.win {
+    background-color: #05da2e;
+}
+
+.winBorder {
+    border-color: #05da2e;
+}
+
+.draw {
+    background-color: #efef00;
+}
+
+.drawBorder {
+    border-color: #efef00;
+}
+
+.details {
+    clip: rect(auto, auto, auto, auto);
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.gameDetails {
+    overflow-y: hidden;
+    max-width: 1400px;
+    width: 90%;
+    background-color: #eaeaea;
+    border: 2px solid #dddddd;
+    border-top: none;
+}
+
+.playerIcon {
+    height: 32px;
+    border-radius: 2px;
+    margin-right: 4px;
+    display: block;
+}
+
+.player {
+    color: black;
+    overflow: hidden;
+    word-wrap: unset;
+    height: 20px;
+    padding: 6px 0px;
+}
+
+.playerName {
+    width: 150px;
+    display: flex;
+    align-self: center;
+}
+
+.me {
+    font-weight: bold;
+}
+
+.gameStatDetails {
+    width: 100%;
+    min-height: 270px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.roundsLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.roundsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.round {
+    width: 36px;
+    height: 190px;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-right: 5px;
+}
+
+.rLose {
+    border-bottom: 5px solid #e43437;
+}
+
+.rWin {
+    border-bottom: 5px solid #05da2e;
+}
+
+.rLoseK {
+    border-bottom: 5px solid #e43437;
+    background-image: linear-gradient(#eaeaea, rgba(255, 0, 2, 0.19)); /* Standard syntax (must be last) */
+}
+
+.rWinK {
+    background-image: linear-gradient(#eaeaea, rgba(0, 255, 2, 0.19)); /* Standard syntax (must be last) */
+    border-bottom: 5px solid #05da2e;
+}
+
+.killIcon {
+    width: 36px;
+    height: 36px;
+    background-image: url('../img/status-dead.png');
+    background-size: 36px;
+}
+
+.detailsInfo {
+    padding: 0px 5px;
+    margin-top: 10px;
+    width: 528px;
+}
+
+.important {
+    font-weight: bold;
+}
+
+#tooltip {
+    z-index: 9999;
+    position: absolute;
+    width: auto;
+    height: auto;
+    background-color: rgba(240, 240, 240, 1);
+    border: 1px solid black;
+    border-radius: 5px 5px;
+    top: 500px;
+    left: 500px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-flow: wrap;
+}
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+    height: 32px;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 2px;
+}
+
+.team {
+    font-weight: 100;
+    font-size: 20pt;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.game > .gameStat > div.gameScore {
+    font-size: 16pt;
+    font-weight: 600;
+    justify-content: center;
+    width: 100px;
+}
+
+.teamBoard {
+    margin-top: 20px;
+    min-width: 200px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.ping {
+    width: 35px;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.score {
+    width: 45px;
+    margin-right: 15px;
+    text-align: right;
+    align-self: center;
+}
+
+.kills {
+    width: 36px;
+    margin-right: 10px;
+    text-align: right;
+    align-self: center;
+}
+
+.assists {
+    width: 50px;
+    margin-right: 10px;
+    text-align: right;
+    align-self: center;
+}
+
+.deaths {
+    width: 50px;
+    margin-right: 15px;
+    text-align: right;
+    align-self: center;
+}
+
+.mvps {
+    width: 46px;
+    margin-right: 10px;
+    text-align: right;
+    align-self: center;
+}
+
+.hsPerc {
+    width: 46px;
+    text-align: right;
+    align-self: center;
+}
+
+.kdaHeader {
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+}
+
+.teamHeader {
+    text-align: center;
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: center;
+}
+
+.mapHeader {
+    display: flex;
+    justify-content: center;
+}
+
+.mapHeader > * {
+    margin-right: 10px;
+}
+
+.gameScoreBig {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 22pt;
+}
+
+.demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 85px;
+}
+
+.downloadDemo {
+    background-color: #eaeaea;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 42pt;
+    font-weight: 100;
+}
+
+.mapTitle {
+    font-weight: 500;
+    font-size: 32pt;
+    align-self: center;
+}
+
+.teamLogo {
+    height: 30px;
+    width: 30px;
+    background-size: 30px;
+}

@@ -1,0 +1,128 @@
+
+.dustii {
+    background-image: url('../img/map_icons/collection_icon_de_dust2.png');
+}
+
+.inferno {
+    background-image: url('../img/map_icons/collection_icon_de_inferno.png');
+}
+
+.cache {
+    background-image: url('../img/map_icons/collection_icon_de_cache.png');
+}
+
+.aztec {
+    background-image: url('../img/map_icons/collection_icon_de_aztec.png');
+}
+
+.bank {
+    background-image: url('../img/map_icons/collection_icon_de_bank.png');
+}
+
+.canals {
+    background-image: url('../img/map_icons/collection_icon_de_canals.png');
+}
+
+.cbble {
+    background-image: url('../img/map_icons/collection_icon_de_cbble.png');
+}
+
+.dust {
+    background-image: url('../img/map_icons/collection_icon_de_dust.png');
+}
+
+.lake {
+    background-image: url('../img/map_icons/collection_icon_de_lake.png');
+}
+
+.mirage {
+    background-image: url('../img/map_icons/collection_icon_de_mirage.png');
+}
+
+.nuke {
+    background-image: url('../img/map_icons/collection_icon_de_nuke.png');
+}
+
+.overpass {
+    background-image: url('../img/map_icons/collection_icon_de_overpass.png');
+}
+
+.safehouse {
+    background-image: url('../img/map_icons/collection_icon_de_safehouse.png');
+}
+
+.train {
+    background-image: url('../img/map_icons/collection_icon_de_train.png');
+}
+
+.vertigo {
+    background-image: url('../img/map_icons/collection_icon_de_vertigo.png');
+}
+
+.s_dustii {
+    background-image: url('../img/1080p/de_dust2.png');
+}
+
+.s_inferno {
+    background-image: url('../img/1080p/de_inferno.png');
+}
+
+.s_cache {
+    background-image: url('../img/1080p/de_cache.png');
+}
+
+.s_aztec {
+    background-image: url('../img/1080p/de_aztec.png');
+}
+
+.s_bank {
+    background-image: url('../img/1080p/de_bank.png');
+}
+
+.s_canals {
+    background-image: url('../img/1080p/de_canals.png');
+}
+
+.s_cbble {
+    background-image: url('../img/1080p/de_cbble.png');
+}
+
+.s_dust {
+    background-image: url('../img/1080p/de_dust.png');
+}
+
+.s_lake {
+    background-image: url('../img/1080p/de_lake.png');
+}
+
+.s_mirage {
+    background-image: url('../img/1080p/de_mirage.png');
+}
+
+.s_nuke {
+    background-image: url('../img/1080p/de_nuke.png');
+}
+
+.s_overpass {
+    background-image: url('../img/1080p/de_overpass.png');
+}
+
+.s_safehouse {
+    background-image: url('../img/1080p/de_safehouse.png');
+}
+
+.s_train {
+    background-image: url('../img/1080p/de_train.png');
+}
+
+.s_vertigo {
+    background-image: url('../img/1080p/de_vertigo.png');
+}
+
+.ctLogo {
+    background-image: url('../img/teamlogo-large-ct.png');
+}
+
+.tLogo {
+    background-image: url('../img/teamlogo-large-terrorist.png');
+}

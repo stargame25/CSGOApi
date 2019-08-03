@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
+          rel="stylesheet">
+    {% block linkrefs %}{% endblock %}
+    <title>{% block title %}{% endblock %} - CSGOHelper</title>
+</head>
+<body>
+<div id="app">
+    <div id="sidebar">
+        <div id="logo"></div>
+        <div id="nav">
+            <a href={{ url_for('home_view') }}>
+                <div class="selection home">Головна</div>
+            </a>
+            <a href={{ url_for('statistic_view') }}>
+                <div class="selection statistics">Статистика</div>
+            </a>
+            <a href={{ url_for('profile_view') }} target="_blank">
+                <div class="selection profile">Профіль</div>
+            </a>
+            <a href={{ url_for('games_view') }}>
+                <div class="selection games">Матчі</div>
+            </a>
+            <a href={{ url_for('settings_view') }}>
+                <div class="selection settings">Настройка</div>
+            </a>
+            <a href={{ url_for('logout_view') }}>
+                <div class="selection logout">Вихід</div>
+            </a>
+        </div>
+        {% if version %}
+        <div id="version">Version: {{ version }}</div>
+        {% endif %}
+    </div>
+    <div id="Header"></div>
+    {% if conn or perm_ban or temp_ban %}
+        <div class="bans">
+            {% if not conn %}
+                <h1 id="conStat"><span>Неможливо підключитись до мережі: Steam</span></h1>
+            {% endif %}
+            {% if perm_ban %}
+                <h1 id="permBan"><span>Вам заборонено змагальний режим по причині: {{ ", ".join(perm_ban) }}</span></h1>
+            {% endif %}
+            {% if temp_ban %}
+                <h1 id="tempBan" delta="{{ temp_ban.get('delta') or 0 }}"><span>Змагальний режим буде доступний через:
+                    {% if temp_ban.get('days') %}
+                        <span id="days"><span>{{ temp_ban.get('days') }}</span><span> д.</span></span>{% endif %}
+                    {% if temp_ban.get('hours') %}
+                        <span id="hours"><span>{{ temp_ban.get('hours') }}</span><span> г.</span></span>{% endif %}
+                    {% if temp_ban.get('minutes') %}
+                        <span id="minutes"><span>{{ temp_ban.get('minutes') }}</span><span> м.</span></span>{% endif %}
+                    {% if temp_ban.get('seconds') %}
+                        <span id="seconds"><span>{{ temp_ban.get('seconds') }}</span><span> с.</span></span>{% endif %}
+            </span></h1>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div id="main">
+        <p id="title">{% block title2 %}{% endblock %}</p>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% block scripts %}{% endblock %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+

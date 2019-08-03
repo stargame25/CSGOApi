@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block linkrefs %}
+    <link rel="stylesheet" href={{ url_for('static', filename="css/home.css") }}>
+    <link rel="stylesheet" href={{ url_for('static', filename="css/csgomisc.css") }}>
+{% endblock %}
+{% block scripts %}{% endblock %}
+{% block title %}Головна{% endblock %}
+{% block title2 %}Головна{% endblock %}
+{% block content %}
+    <div id="profile">
+        <div class="row" id="profileTable">
+            <div class="col" id="profileIcon">
+                <div id="avatar" style="background-image: url({{ me.get('icon') or '../img/avatar.png' }});"></div>
+            </div>
+            <div class="col" id="profileInfo">
+                <div class="row">
+                    <div class="col" id="profileName">
+                        <div id="country" style="background-image: url({{ url_for('static', filename=('img/countries/' + me.get('country')|country + '.png')) }});"></div>
+                        <div>{{ me.get("name") }}</div>
+                    </div>
+                </div>
+                <div class="row" id="profileCSGO">
+                    <div class="col" id="profileCSGOheader">
+                        <div class="row">Режим</div>
+                        <div class="row">Звання</div>
+                        <div class="row">Всього</div>
+                        <div class="row textR">Виграшів</div>
+                        <div class="row textR">Поразок</div>
+                        <div class="row textR">Нічьї</div>
+                    </div>
+                    {% if me.get('competitive') %}
+                        {% set games_sum = [me.get('competitive').get('wins')|int or 0, me.get('competitive').get('losses')|int or 0 , me.get('competitive').get('draws')|int or 0 ] %}
+                        <div class="col">
+                            <div class="row">Змагальний</div>
+                            <div class="row">
+                                <div id="rank_competitive" style="background-image: url('static/img/ranks/{{ me.get('competitive').get('rank') | get_c_rank_image }}.png');"></div>
+                            </div>
+                            <div class="row textR">{{ games_sum | sum }}</div>
+                            <div class="row textR">{{ me.get('competitive').get('wins') or 0 }}</div>
+                            <div class="row textR">{{ me.get('competitive').get('losses') or 0 }}</div>
+                            <div class="row textR">{{ me.get('competitive').get('draws') or 0 }}</div>
+                        </div>
+                    {% else %}
+                        <div class="col">
+                            <div class="row">Змагальний</div>
+                            <div class="row">
+                                <div id="rank_competitive" class="{{ None | get_c_rank_image }}"></div>
+                            </div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                        </div>
+                    {% endif %}
+                    {% if me.get('wingman') %}
+                        {% set games_sum = [me.get('wingman').get('wins')|int or 0, me.get('wingman').get('losses')|int or 0, me.get('wingman').get('draws')|int or 0] %}
+                        <div class="col">
+                            <div class="row">Напарники</div>
+                            <div class="row">
+                                <div id="rank_wingman" style="background-image: url('static/img/ranks/{{ me.get('wingman').get('rank') | get_w_rank_image }}.png')"></div>
+                            </div>
+                            <div class="row textR">{{ games_sum | sum }}</div>
+                            <div class="row textR">{{ me.get('wingman').get('wins') or 0 }}</div>
+                            <div class="row textR">{{ me.get('wingman').get('losses') or 0 }}</div>
+                            <div class="row textR">{{ me.get('wingman').get('draws') or 0 }}</div>
+                        </div>
+                    {% else %}
+                        <div class="col">
+                            <div class="row">Напарники</div>
+                            <div class="row">
+                                <div id="rank_wingman" class="{{ None | get_w_rank_image }}"></div>
+                            </div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                            <div class="row textR">0</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="lastMatches">
+        <table id="matchesTable">
+            <tr id="matchesHeader">
+                <td colspan="2" class="mapName">Карта</td>
+                <td class="gameDate">Дата</td>
+                <td class="gameTime">Час</td>
+                <td class="gameDuration">Тривалість</td>
+                <td class="gameStatus">Статус</td>
+            </tr>
+            {% for game in games %}
+                <tr>
+                    <td class="map">
+                        <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
+                    <td>{{ game.get('info').get('gamemode')|get_map_space }}</td>
+                    <td>{{ game.get('info').get('date')|get_only_date }}</td>
+                    <td>{{ game.get('info').get('date')|get_only_time }}</td>
+                    <td>{{ game.get('info').get('play_time') }}</td>
+                    <td class="status"><span
+                            class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <!--
+    <div id="graphs">
+        <canvas id="myChart" width="650" height="400"></canvas>
+    </div>
+    -->
+{% endblock %}

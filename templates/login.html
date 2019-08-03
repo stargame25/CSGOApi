@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/login.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/preloader.css') }}>
+    <title>Вхід - CSGOHelper</title>
+</head>
+<body>
+<video autoplay muted loop id="bgVideo">
+    <source src={{ url_for('static', filename='img/nuke720p.webm') }} type="video/mp4">
+</video>
+<div id="app">
+    <div id="content">
+        <div id="logo"></div>
+        <div id="modal">
+            <div id="preloader">
+                <div id="floatingBarsG">
+                    <div class="blockG" id="rotateG_01"></div>
+                    <div class="blockG" id="rotateG_02"></div>
+                    <div class="blockG" id="rotateG_03"></div>
+                    <div class="blockG" id="rotateG_04"></div>
+                    <div class="blockG" id="rotateG_05"></div>
+                    <div class="blockG" id="rotateG_06"></div>
+                    <div class="blockG" id="rotateG_07"></div>
+                    <div class="blockG" id="rotateG_08"></div>
+                </div>
+            </div>
+            <div id="login">
+                <label class="title">Sign in</label>
+                <div class="field">
+                    <i class="fas fa-user"></i>
+                    <input id="username" type="text" name="username" required autofocus/>
+                </div>
+                <div class="field">
+                    <i class="fas fa-lock"></i>
+                    <input id="password" type="password" name="password" required/>
+                </div>
+                <div id="captcha" hidden>
+                    <div>
+                        <img src="#" alt="">
+                    </div>
+                    <div>
+                        <input id="captchaInput" type="text" maxlength="6" required/>
+                    </div>
+                </div>
+                <div id="submit">
+                    <input class="btn" id="submitButton" type="button" value="OK" onclick="loginIn()">
+                </div>
+            </div>
+            <div id="f2a" hidden>
+                <label class="title">F2A code</label>
+                <div class="field">
+                    <i class="fas fa-key"></i>
+                    <input type="text" name="f2a_code" id="f2aCode" name="f2aCode" maxlength="5" required/>
+                </div>
+                <div id="submit">
+                    <input class="btn" id="submitF2A" type="button" value="OK" onclick="twoFactorIn()">
+                </div>
+            </div>
+            <div id="error" hidden><span></span></div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename='js/rsa.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jsbn.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
+</html>
