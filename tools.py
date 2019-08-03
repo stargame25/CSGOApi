@@ -1,3 +1,4 @@
+from os import mkdir, path
 import re as regex
 import time
 import datetime
@@ -11,7 +12,7 @@ default_config = {
     'api': {'api_key': None},
     'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
                 'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.6.8.1'}
+    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.7'}
 }
 
 settings_template = {
@@ -163,3 +164,9 @@ def generate_paginator(page, max_page):
         for i in range(5):
             out.append(page - 2 + i)
     return out
+
+def logg(trace):
+    if not path.isdir("logs"):
+        mkdir("logs")
+    with open('logs\\' + str(datetime.datetime.now()).replace(":", "-") + '.txt', "w") as file:
+        file.write(trace)

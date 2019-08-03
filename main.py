@@ -1,4 +1,5 @@
 import sys
+import traceback
 from os.path import join as path_join
 from copy import deepcopy
 from tools import *
@@ -94,7 +95,8 @@ def load_user(username):
 
 @app.errorhandler(Exception)
 def all_exception_handler(error):
-    print(error)
+    print("Error occurred, watch logs folder for details")
+    logg(str(traceback.format_exc()))
     return render_template("error.html"), 500
 
 
