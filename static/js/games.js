@@ -66,11 +66,24 @@ function unloadProfileImages(e) {
 (function listAnimation(){
     list = [...document.getElementsByClassName("game")];
     list.forEach((item, index) => {
-        item.style.opacity = 0;
         if(list.length > 50){
-            setTimeout(() => {item.className = item.className + " animated fadeIn"}, (5000/list.length * index));
+            setTimeout(() => {item.className = item.className + " animated zoomFadeIn", item.style.opacity = 1}, (5000/list.length * index));
         } else {
-            setTimeout(() => {item.className = item.className + " animated fadeIn"}, (index * 100));
+            setTimeout(() => {item.className = item.className + " animated zoomFadeIn", item.style.opacity = 1}, (index * 100));
         }
+    })
+})();
+
+(function paginatorAnimation(){
+    list = [...document.getElementById("paginator").getElementsByTagName("div")];
+    console.log(list);
+    list.forEach((item, index) => {
+        setTimeout(() => {
+            item.className = item.className + " fadeIn";
+            setTimeout(() => {
+                item.style.opacity = 1;
+                item.className = item.className.replace("fadeIn", "swingHover");
+            }, 1000);
+        }, (index * 200));
     })
 })();

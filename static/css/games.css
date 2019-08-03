@@ -22,6 +22,7 @@
     border-radius: 3px;
     background-color: #222b3a;
     margin: 0 5px;
+    opacity: 0;
 }
 
 #paginator > div > a {

@@ -155,7 +155,7 @@
     </div>
     <div id="paginator">
         {% for item in paginator %}
-        <div id="{{ "selected" if page == item else "" }}"><a href="{{ item }}">{{ item }}</a></div>
+        <div class="animated" id="{{ "selected" if page == item else "" }}"><a href="{{ item }}">{{ item }}</a></div>
         {% endfor %}
     </div>
 {% endblock %}

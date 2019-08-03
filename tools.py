@@ -12,7 +12,7 @@ default_config = {
     'api': {'api_key': None},
     'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
                 'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.7'}
+    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.7.0.1'}
 }
 
 settings_template = {
