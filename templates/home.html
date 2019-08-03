@@ -1,9 +1,12 @@
 {% extends 'layout.html' %}
 {% block linkrefs %}
+    <link rel="stylesheet" href={{ url_for('static', filename="css/animations.css") }}>
     <link rel="stylesheet" href={{ url_for('static', filename="css/home.css") }}>
     <link rel="stylesheet" href={{ url_for('static', filename="css/csgomisc.css") }}>
 {% endblock %}
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}
 {% block title %}Головна{% endblock %}
 {% block title2 %}Головна{% endblock %}
 {% block content %}

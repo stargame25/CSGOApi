@@ -7,6 +7,10 @@
     font-weight: 500;
 }
 
+#content > div{
+    opacity: 0;
+}
+
 .col {
     display: flex;
     flex-direction: column;
