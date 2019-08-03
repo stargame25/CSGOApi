@@ -16,6 +16,12 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 users = {}
 
+default_config = {
+    'api': {'api_key': None},
+    'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True, 'max_download_games': None},
+    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.6.7'}
+}
+
 settings_template = {
     'login': {},
     'home': {'last_games_count': 2},
@@ -52,26 +58,63 @@ def read_json_file(path, filename):
 
 
 def get_config():
-    data = None
     out = {}
-    with open(config_name, "r") as conf:
-        category = None
-        for line in conf:
-            if line.strip():
-                if re.match(r"^\[\w+\]$", line):
-                    category = line.strip().replace('[', "").replace(']', "")
-                    out[category] = {}
-                elif category:
-                    temp = line.strip().split("=")
-                    out[category][temp[0]] = int(temp[1]) if temp[1].isdigit() else str(temp[1])
-            else:
-                category = None
-    return out
+    try:
+        with open(config_name, "r") as conf:
+            category = None
+            for line in conf:
+                if line.strip():
+                    if re.match(r"^\[\w+\]$", line):
+                        category = line.strip().replace('[', "").replace(']', "")
+                        out[category] = {}
+                    elif category:
+                        temp = line.strip().split("=")
+                        if temp[1]:
+                            if temp[1].lower() in ['t', 'f']:
+                                if temp[1].lower() == 't':
+                                    out[category][temp[0]] = True
+                                else:
+                                    out[category][temp[0]] = False
+                            elif temp[1].isdigit():
+                                out[category][temp[0]] = int(temp[1])
+                            else:
+                                out[category][temp[0]] = str(temp[1])
+                        else:
+                            out[category][temp[0]] = None
+                else:
+                    category = None
+        return out
+    except Exception:
+        generate_config()
+        return get_config()
 
 
 def set_config(data):
     with open(config_name, 'w') as file:
-        file.write(data)
+        for item in data:
+            file.write(item.upper()+'\n')
+
+
+def generate_config():
+    config = []
+    for category, section in default_config.items():
+        config.append('[' + category + ']')
+        for title, value in section.items():
+            if value is None:
+                config.append(title.strip() + '=')
+            elif isinstance(value, int):
+                config.append(title.strip() + '=' + str(value))
+            elif isinstance(value, bool):
+                if value:
+                    config.append(title.strip() + '=' + 'T')
+                else:
+                    config.append(title.strip() + '=' + 'F')
+            else:
+                config.append(title.strip() + '=' + value.strip())
+        config.append("")
+    set_config(config)
+
+
 
 
 def threads_counts(count):
@@ -418,7 +461,7 @@ def country(code):
 
 if __name__ == '__main__':
     key = web_section.get('SECRET_KEY')
-    app.secret_key = randomString() if len(key) < 10 else key
+    app.secret_key = randomString() if not key or len(key) < 10 else key
     try:
         if bool(app_section.get('ONLINE') and not app_section.get("DEV_MODE")):
             print("Server is accessible from internet")
