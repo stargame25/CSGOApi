@@ -3,3 +3,4 @@
 dist/
 static/img/
 *.ini
+logs/
