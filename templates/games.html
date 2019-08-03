@@ -18,7 +18,7 @@
         {% for game in games %}
             <div class="gameBlock">
                 <div class="game {{ "winBorder" if game.get('stat').get('status') == 1 else ("loseBorder" if game.get('stat').get('status') == -1 else "drawBorder") }}">
-                    <div class="gameNumber"><span>{{ loop.index }}.</span></div>
+                    <div class="gameNumber"><span>{{ loop.index + ((page-1) * page_size) }}.</span></div>
                     <div class="gameStat">
                         <div class="gameMode">
                             <div class="mode">{{ game.get('info').get('gamemode')|get_gamemode }}</div>
@@ -154,10 +154,8 @@
         {% endfor %}
     </div>
     <div id="paginator">
-        <div><a href="{{ page }}">{{ games|length }}</a></div>
-        <div>{{ games|length }}</div>
-        <div>{{ games|length }}</div>
-        <div>{{ games|length }}</div>
-        <div>{{ games|length }}</div>
+        {% for item in paginator %}
+        <div id="{{ "selected" if page == item else "" }}"><a href="{{ item }}">{{ item }}</a></div>
+        {% endfor %}
     </div>
 {% endblock %}

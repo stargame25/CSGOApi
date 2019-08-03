@@ -115,20 +115,6 @@ def gen_temp_ban(date):
                     'delta': int(time.mktime(expire.timetuple()))}
     return {}
 
-
-def generate_range_games(games, rang):
-    if len(games) <= rang:
-        return games
-    out = []
-    for i in range(rang):
-        out.append(games[i])
-    return out
-
-
-def _generate_range_games(games):
-    generate_range_games(games, len(games))
-
-
 def shuffle_games(games):
     if not games or len(games.get(gamemodes[0])) == 0:
         return games.get(gamemodes[1])
@@ -159,12 +145,14 @@ def generate_paginator(page, max_page):
     out = []
     if page <= 3:
         for i in range(5):
-            out.append(i+1)
-    elif page >= max_page-3:
+            out.append(i + 1)
+    elif page > max_page - 3:
         for i in range(5):
-            out.append(max_page-i)
-        return
-
+            out.append(max_page - 4 + i)
+    else:
+        for i in range(5):
+            out.append(page - 2 + i)
+    return out
 
 
 config_name = "config.ini"
@@ -236,8 +224,8 @@ def index():
 @app.route(sitemap['home'])
 @login_required
 def home_view():
-    home = {"me": current_user.api.me, "games": generate_range_games(shuffle_games(current_user.api.csgo_games),
-                                                                     current_user.settings['home']['last_games_count']),
+    home = {"me": current_user.api.me,
+            "games": shuffle_games(current_user.api.csgo_games)[0:current_user.settings['home']['last_games_count']],
             "ranks": ranks}
     return render_template("home.html", **generate_default(current_user.api.me), **home)
 
@@ -254,20 +242,29 @@ def profile_view():
     return redirect(current_user.api.me.get('com_link'))
 
 
-@app.route(sitemap['games'], defaults={'page': 1})
+@app.route('/games')
 @login_required
-def games_view(page):
-    max_page = len(current_user.api.csgo_games)//current_user.settings.get('games').get('page_size')
+def games_redirect():
+    return redirect(url_for("games_view", page=1))
+
+
+@app.route('/games/<int:page>')
+@login_required
+def games_view(page=1):
+    shuffled_games = shuffle_games(current_user.api.csgo_games)
+    max_page = len(shuffled_games) // current_user.settings.get('games').get('page_size') + 1 if len(
+        shuffled_games) % current_user.settings.get('games').get('page_size') != 0 else len(
+        shuffled_games) // current_user.settings.get('games').get('page_size')
     if page <= 1:
         page = 1
     elif page >= max_page:
         page = max_page
-    games = {"settings": current_user.settings.get('games'),
-             "games": generate_range_games(shuffle_games(current_user.api.csgo_games),
-                                           current_user.settings.get('games').get('page_size') * page),
+    games = {"page": page,
+             "page_size": current_user.settings.get('games').get('page_size'),
+             "settings": current_user.settings.get('games'),
+             "games": shuffled_games[current_user.settings.get('games').get('page_size') * (page - 1):current_user.settings.get('games').get('page_size') * page],
              "me": current_user.api.me,
-             "page": page,
-             "paginator": generate_paginator(page, 60)}
+             "paginator": generate_paginator(page, max_page)}
     return render_template("games.html", **generate_default(current_user.api.me), **games)
 
 
