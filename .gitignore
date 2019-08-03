@@ -1,4 +1,4 @@
 .idea/
 *.pyc
 dist/
-static/img/
+!static/img
