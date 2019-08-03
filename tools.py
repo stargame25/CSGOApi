@@ -9,8 +9,9 @@ config_types = ['default', 'template']
 
 default_config = {
     'api': {'api_key': None},
-    'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True, 'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.6.8'}
+    'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
+                'max_download_games': None},
+    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.6.8.1'}
 }
 
 settings_template = {
@@ -21,6 +22,7 @@ settings_template = {
     'games': {"page_size": 10, "load_icons": False},
     'settings': {}
 }
+
 
 def randomString(stringLength=32):
     letters = string.ascii_lowercase
@@ -76,7 +78,7 @@ def set_config(config_name, data, upper=False):
             if upper:
                 file.write(item.upper() + '\n')
             else:
-                file.write(item+'\n')
+                file.write(item + '\n')
 
 
 def generate_config(config_name, config_dict, upper=False):
@@ -110,9 +112,6 @@ def str_to_datetime(string):
     return datetime.datetime.strptime(string.replace(" GMT", ""), '%Y-%m-%d %H:%M:%S')
 
 
-
-
-
 def gen_temp_ban(date):
     if date:
         nowtime = datetime.datetime.utcnow()
@@ -124,8 +123,9 @@ def gen_temp_ban(date):
                     'delta': int(time.mktime(expire.timetuple()))}
     return {}
 
+
 def shuffle_games(games):
-    gamemodes = games.keys()
+    gamemodes = list(games.keys())
     if not games or len(games.get(gamemodes[0])) == 0:
         return games.get(gamemodes[1])
     if not games or len(games.get(gamemodes[1])) == 0:

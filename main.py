@@ -11,6 +11,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 users = {}
 
+
 class User(UserMixin):
     id = None
     username = None
@@ -44,6 +45,7 @@ def generate_default(me):
             overwatch = "overwatch"
     return {"version": version, "conn": conn, "perm_ban": perm_ban, "temp_ban": gen_temp_ban(expire)}
 
+
 settings_template_name = "settings_template.ini"
 config_name = "config.ini"
 teams = ['terrorists', 'counter-terrorists']
@@ -73,7 +75,8 @@ ranks = ["Silver 1", "Silver 2", "Silver 3", "Silver 4", "Silver Elite", "Silver
          "Legendary Eagle Master", "Supreme Master First Class ", "The Global Elite"]
 
 sitemap = dict(login='/login', logout='/logout', home='/home', statistics='/statistics', profile='/profile',
-               games='/games/<int:page>', settings='/settings', setdown='/setdown', escape="/escape")
+               games='/games', games_pages='/games/<int:page>', settings='/settings', setdown='/setdown',
+               escape="/escape")
 
 
 @login_manager.unauthorized_handler
@@ -133,13 +136,13 @@ def profile_view():
     return redirect(current_user.api.me.get('com_link'))
 
 
-@app.route('/games')
+@app.route(sitemap['games'])
 @login_required
 def games_redirect():
     return redirect(url_for("games_view", page=1))
 
 
-@app.route('/games/<int:page>')
+@app.route(sitemap['games_pages'])
 @login_required
 def games_view(page=1):
     shuffled_games = shuffle_games(current_user.api.csgo_games)
@@ -153,7 +156,9 @@ def games_view(page=1):
     games = {"page": page,
              "page_size": current_user.settings.get('games').get('page_size'),
              "settings": current_user.settings.get('games'),
-             "games": shuffled_games[current_user.settings.get('games').get('page_size') * (page - 1):current_user.settings.get('games').get('page_size') * page],
+             "games": shuffled_games[
+                      current_user.settings.get('games').get('page_size') * (page - 1):current_user.settings.get(
+                          'games').get('page_size') * page],
              "me": current_user.api.me,
              "paginator": generate_paginator(page, max_page)}
     return render_template("games.html", **generate_default(current_user.api.me), **games)
