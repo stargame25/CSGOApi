@@ -159,7 +159,7 @@ def generate_paginator(page, max_page):
         return []
     if max_page < 5:
         for i in range(max_page):
-            out.append(i)
+            out.append(i+1)
     elif page <= 3:
         for i in range(5):
             out.append(i + 1)

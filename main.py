@@ -1,5 +1,7 @@
 import sys
 import traceback
+import threading
+from ctypes import pythonapi, py_object
 from os.path import join as path_join
 from copy import deepcopy
 from tools import *
@@ -26,6 +28,43 @@ class User(UserMixin):
 
     def get_id(self):
         return self.username
+
+
+class AsyncTask(threading.Thread):
+    def __init__(self, username="", task="", method=None):
+        threading.Thread.__init__(self)
+        self.username = username
+        self.task = task
+        self.method = method
+        self.finished = False if method else True
+
+    def get_id(self):
+        if hasattr(self, '_thread_id'):
+            return self._thread_id
+        for id, thread in threading._active.items():
+            if thread is self:
+                return id
+
+    def stop(self):
+        thread_id = self.get_id()
+        res = pythonapi.PyThreadState_SetAsyncExc(thread_id, py_object(SystemExit))
+        if res > 1:
+            pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
+        else:
+            self.finished = True
+
+    def run(self):
+        if self.method:
+            self.method()
+        self.finished = True
+
+
+def add_task(username, task, method):
+    if users[username]['task'].finished:
+        async_job = AsyncTask(username, task, method)
+        users[username]['task'] = async_job
+        async_job.setDaemon(True)
+        async_job.start()
 
 
 def generate_default(me):
@@ -90,6 +129,9 @@ def load_user(username):
     if username in users.keys():
         api_object = users[username]['api']
         settings = users[username]['settings']
+        if users[username]['fresh']:
+            users[username]['fresh'] = False
+            add_task(username, 'main', api_object.main)
         return User(username, api_object, settings)
 
 
@@ -196,9 +238,9 @@ def login_view():
                                                twofactor_code=request.form.get('twofactor_code') or '')
                 if int(response['code']) in [1, 2, 3]:
                     if int(response['code'] == 1):
-                        api_object.main()
                         settings_object = deepcopy(settings_template)
-                        users[api_object.username] = {"api": api_object, "settings": settings_object}
+                        users[api_object.username] = {"api": api_object, "settings": settings_object,
+                                                      "fresh": True, "task": AsyncTask()}
                         print(str(api_object.username) + " logged in!")
                         user = User(request.form.get("username"), api_object, settings_object)
                         login_user(user)
@@ -217,8 +259,10 @@ def getrsa():
 @login_required
 def logout_view():
     print(str(current_user.username) + " logged out!")
-    session.clear()
+    if not users[current_user.username]['task'].finished:
+        users[current_user.username]['task'].finished.stop()
     users.pop(current_user.username)
+    session.clear()
     logout_user()
     return redirect(url_for('login_view'))
 
