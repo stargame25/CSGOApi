@@ -12,7 +12,8 @@ default_config = {
     'api': {'api_key': None},
     'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
                 'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.7.0.2'}
+    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'celery_broker_url': 'redis://localhost:6379/0',
+            'celery_result_backend': 'redis://localhost:6379/0', 'version': '0.7.1'}
 }
 
 settings_template = {
@@ -89,13 +90,13 @@ def generate_config(config_name, config_dict, upper=False):
         for title, value in section.items():
             if value is None:
                 config.append(title.strip() + '=')
-            elif isinstance(value, int):
-                config.append(title.strip() + '=' + str(value))
             elif isinstance(value, bool):
                 if value:
                     config.append(title.strip() + '=' + 'T')
                 else:
                     config.append(title.strip() + '=' + 'F')
+            elif isinstance(value, int):
+                config.append(title.strip() + '=' + str(value))
             else:
                 config.append(title.strip() + '=' + value.strip())
         config.append("")
@@ -154,7 +155,12 @@ def shuffle_games(games):
 
 def generate_paginator(page, max_page):
     out = []
-    if page <= 3:
+    if max_page == 0:
+        return []
+    if max_page < 5:
+        for i in range(max_page):
+            out.append(i)
+    elif page <= 3:
         for i in range(5):
             out.append(i + 1)
     elif page > max_page - 3:
@@ -164,6 +170,7 @@ def generate_paginator(page, max_page):
         for i in range(5):
             out.append(page - 2 + i)
     return out
+
 
 def logg(trace):
     if not path.isdir("logs"):

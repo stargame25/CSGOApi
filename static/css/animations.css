@@ -101,6 +101,32 @@
     }
 }
 
+@media screen and (max-width: 1635px){
+    @keyframes fadeInDownSlide {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 820px;
+    }
+}
+
+@keyframes fadeInDownSlideBack {
+    from {
+        opacity: 1;
+        max-height: 820px;
+    }
+
+    to {
+        opacity: 0;
+        max-height: 0;
+    }
+}
+}
+
 @-webkit-keyframes swing {
     20% {
         -webkit-transform: rotate3d(0, 0, 1, 15deg);

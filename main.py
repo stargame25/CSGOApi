@@ -148,19 +148,17 @@ def games_redirect():
 @login_required
 def games_view(page=1):
     shuffled_games = shuffle_games(current_user.api.csgo_games)
-    max_page = len(shuffled_games) // current_user.settings.get('games').get('page_size') + 1 if len(
-        shuffled_games) % current_user.settings.get('games').get('page_size') != 0 else len(
-        shuffled_games) // current_user.settings.get('games').get('page_size')
+    page_size = current_user.settings.get('games').get('page_size') or 10
+    max_page = len(shuffled_games) // page_size + 1 if len(shuffled_games) % page_size != 0 else len(
+        shuffled_games) // page_size
     if page <= 1:
         page = 1
     elif page >= max_page:
         page = max_page
     games = {"page": page,
-             "page_size": current_user.settings.get('games').get('page_size'),
+             "page_size": page_size,
              "settings": current_user.settings.get('games'),
-             "games": shuffled_games[
-                      current_user.settings.get('games').get('page_size') * (page - 1):current_user.settings.get(
-                          'games').get('page_size') * page],
+             "games": shuffled_games[page_size * (page - 1):page_size * page],
              "me": current_user.api.me,
              "paginator": generate_paginator(page, max_page)}
     return render_template("games.html", **generate_default(current_user.api.me), **games)
@@ -277,7 +275,7 @@ def game_status_text(stat):
     elif stat == 0:
         return "Нічия"
     elif stat == 1:
-        return "Виграш"
+        return "Перемога"
 
 
 @app.template_filter()

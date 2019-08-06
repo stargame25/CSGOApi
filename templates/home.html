@@ -13,13 +13,13 @@
     <div id="profile">
         <div class="row" id="profileTable">
             <div class="col" id="profileIcon">
-                <div id="avatar" style="background-image: url({{ me.get('icon') or '../img/avatar.png' }});"></div>
+                <div id="avatar" style="background-image: url({{ me.get('icon') or 'static/img/avatar.png' }});"></div>
             </div>
             <div class="col" id="profileInfo">
                 <div class="row">
                     <div class="col" id="profileName">
                         <div id="country" style="background-image: url({{ url_for('static', filename=('img/countries/' + me.get('country')|country + '.png')) }});"></div>
-                        <div>{{ me.get("name") }}</div>
+                        <div>{{ me.get("name") or 'Unknown' }}</div>
                     </div>
                 </div>
                 <div class="row" id="profileCSGO">
@@ -27,9 +27,9 @@
                         <div class="row">Режим</div>
                         <div class="row">Звання</div>
                         <div class="row">Всього</div>
-                        <div class="row textR">Виграшів</div>
+                        <div class="row textR">Перемог</div>
                         <div class="row textR">Поразок</div>
-                        <div class="row textR">Нічьї</div>
+                        <div class="row textR">Нічиї</div>
                     </div>
                     {% if me.get('competitive') %}
                         {% set games_sum = [me.get('competitive').get('wins')|int or 0, me.get('competitive').get('losses')|int or 0 , me.get('competitive').get('draws')|int or 0 ] %}

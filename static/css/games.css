@@ -45,7 +45,6 @@
     padding: 15.5px 0;
     background-color: #dddddd;
     border-radius: 2px;
-    font-family: 'Roboto', sans-serif;
     z-index: 100;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.25) 0 4px 5px;
@@ -89,7 +88,8 @@
 
 .screen {
     width: 480px;
-    height: 270px;
+    height: 200px;
+    background-position: center;
     background-image: url('../img/1080p/default.png');
     background-repeat: no-repeat;
     background-size: 480px 270px;
@@ -98,7 +98,7 @@
 
 .screenWrapper {
     width: 528px;
-    height: 270px;
+    height: 200px;
     padding: 0 5px;
     margin-top: 10px;
     display: flex;
@@ -106,7 +106,7 @@
 }
 
 .mode {
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .more > a {
@@ -114,8 +114,8 @@
 }
 
 .title {
-    font-size: 16pt;
-    font-weight: bold;
+    font-size: 18pt;
+    font-weight: 400;
 }
 
 .gameMode {
@@ -133,7 +133,17 @@
 }
 
 .gameStatus {
-    width: 150px;
+    width: 175px;
+}
+
+.scoreWrapper{
+    display: flex;
+    text-align: center;
+}
+
+.scoreNumber{
+    text-align: center;
+    width: 30px;
 }
 
 .gameNumber {
@@ -247,13 +257,13 @@
 .player {
     color: black;
     overflow: hidden;
-    word-wrap: unset;
     height: 20px;
     padding: 6px 0px;
+    white-space: nowrap;
 }
 
 .playerName {
-    width: 150px;
+    width: 200px;
     display: flex;
     align-self: center;
 }
@@ -264,7 +274,7 @@
 
 .gameStatDetails {
     width: 100%;
-    min-height: 270px;
+    min-height: 200px;
     padding-bottom: 20px;
     display: flex;
     flex-direction: row;
@@ -354,21 +364,22 @@
     display: flex;
     flex-direction: row;
     height: 32px;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     margin-bottom: 2px;
 }
 
 .team {
-    font-weight: 100;
+    font-weight: 300;
     font-size: 20pt;
     margin-right: 10px;
     margin-left: 10px;
 }
 
 .game > .gameStat > div.gameScore {
-    font-size: 16pt;
-    font-weight: 600;
+    font-size: 18pt;
+    font-weight: 300;
     justify-content: center;
+    align-items: center;
     width: 100px;
 }
 
@@ -427,7 +438,7 @@
 }
 
 .kdaHeader {
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
     margin-bottom: 5px;
 }
 
@@ -465,13 +476,12 @@
     border: 1px solid black;
     border-radius: 5px;
     padding: 6px 10px;
-    font-family: 'Roboto', sans-serif;
     font-size: 42pt;
     font-weight: 100;
 }
 
 .mapTitle {
-    font-weight: 500;
+    font-weight: 300;
     font-size: 32pt;
     align-self: center;
 }

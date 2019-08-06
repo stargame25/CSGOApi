@@ -16,6 +16,7 @@
 {% block content %}
     <div id="tooltip" style="display: none"></div>
     <div class="gamesList">
+    {% if games %}
         {% for game in games %}
             <div class="gameBlock">
                 <div class="game {{ "winBorder" if game.get('stat').get('status') == 1 else ("loseBorder" if game.get('stat').get('status') == -1 else "drawBorder") }}">
@@ -29,7 +30,12 @@
                             </div>
                         </div>
                         <div class="gameScore">
-                            <div>{{ game.get('stat').get('game_score') }}</div>
+                            <div class="scoreWrapper">
+                                {% set game_score_list = game.get('stat').get('game_score').split(":") %}
+                                <div class="scoreNumber">{{ game_score_list[0] }}</div>
+                                <div style="width: 10px">:</div>
+                                <div class="scoreNumber">{{ game_score_list[1] }}</div>
+                            </div>
                         </div>
                         <div class="gameTime">
                             <div class="date">Дата: {{ game.get('info').get('date') }}</div>
@@ -105,9 +111,9 @@
                                 {% for team in ['terrorists', 'counter-terrorists'] %}
                                     <div class="col teamBoard">
                                         <div class="teamHeader">
-                                            <div class="teamLogo {{ "ctLogo" if team != "terrorists" else "tLogo" }}"></div>
+                                            <div class="teamLogo"></div>
                                             <span class="team">{{ team|upper }}</span>
-                                            <div class="teamLogo {{ "ctLogo" if team != "terrorists" else "tLogo" }}"></div>
+                                            <div class="teamLogo"></div>
                                         </div>
                                         <div class="flexRow kdaHeader">
                                             <div class="ping">Ping</div>
@@ -159,4 +165,5 @@
         <div class="animated" id="{{ "selected" if page == item else "" }}"><a href="{{ item }}">{{ item }}</a></div>
         {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}

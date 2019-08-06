@@ -31,6 +31,7 @@
     width: 100px;
     background-repeat: no-repeat;
     background-size: 100px 40px;
+    background-image: url('../img/ranks/c_u.png');
 }
 
 #rank_wingman {
@@ -38,6 +39,7 @@
     width: 100px;
     background-repeat: no-repeat;
     background-size: 100px 40px;
+    background-image: url('../img/ranks/w_u.png');
 }
 
 #country {
