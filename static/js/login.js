@@ -16,7 +16,7 @@ let captchaDiv = document.getElementById("captcha");
 let mod, exp, type, captchaGid, captchaUrl, captcha;
 let submitButton = document.getElementById("submitButton");
 let submitButtonF2A = document.getElementById("submitF2A");
-let loader = document.getElementById("preloader");
+let loader = document.getElementById("loader");
 
 function validLogin(){
     if(Boolean(captchaGid) && Boolean(captchaUrl)){

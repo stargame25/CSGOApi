@@ -158,8 +158,10 @@ button.btn {
     border: 1px solid black;
 }
 
-#preloader {
+#loader {
     display: none;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;

@@ -260,7 +260,7 @@ def getrsa():
 def logout_view():
     print(str(current_user.username) + " logged out!")
     if not users[current_user.username]['task'].finished:
-        users[current_user.username]['task'].finished.stop()
+        users[current_user.username]['task'].stop()
     users.pop(current_user.username)
     session.clear()
     logout_user()
@@ -299,7 +299,10 @@ def get_map(text):
 
 @app.template_filter()
 def get_gamemode(text):
-    return text.split(" ")[0]
+    if text.split(" ")[0].lower() == 'competitive':
+        return 'Змагальний'
+    else:
+        return 'Напарники'
 
 
 @app.template_filter()
