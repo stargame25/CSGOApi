@@ -2,3 +2,7 @@
 *.pyc
 dist/
 !static/img
+main.spec
+build/
+logs/
+*.ini
