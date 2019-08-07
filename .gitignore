@@ -2,5 +2,7 @@
 *.pyc
 *.ini
 dist/
+build/
 static/img/
 logs/
+main.spec
