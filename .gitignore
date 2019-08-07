@@ -1,6 +1,8 @@
 .idea/
 *.pyc
-dist/
-static/img/
 *.ini
+dist/
+build/
+static/img/
 logs/
+main.spec
