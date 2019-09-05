@@ -21,7 +21,7 @@ function displayGame(e) {
 
 function playerShowBan(e) {
     let bar = document.getElementById("tooltip");
-    let banData = jsonify(e.target.getAttribute("ban"));
+    let banData = JSON.parse(e.target.getAttribute("ban"));
     if (banData.length > 0) {
         banData = JSON.parse(banData)[0]
     } else {
@@ -76,7 +76,6 @@ function unloadProfileImages(e) {
 
 (function paginatorAnimation(){
     list = [...document.getElementById("paginator").getElementsByTagName("div")];
-    console.log(list);
     list.forEach((item, index) => {
         setTimeout(() => {
             item.className = item.className + " fadeIn";
