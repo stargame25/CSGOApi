@@ -31,10 +31,10 @@ class User(UserMixin):
 
 
 class AsyncTask(threading.Thread):
-    def __init__(self, username="", task="", method=None):
+    def __init__(self, username="", name="", method=None):
         threading.Thread.__init__(self)
         self.username = username
-        self.task = task
+        self.name = name
         self.method = method
         self.finished = False if method else True
 
@@ -86,13 +86,25 @@ def generate_default(me):
     return {"version": version, "conn": conn, "perm_ban": perm_ban, "temp_ban": gen_temp_ban(expire)}
 
 
-settings_template_name = "settings_template.ini"
+def generate_loading_status(page, task):
+    if page in task_relations.keys():
+        if not task.finished:
+            if task.name in task_relations[page]:
+                return True
+    return False
+
+
 config_name = "config.ini"
+settings_template_name = "settings_template.ini"
+settings_permission_name = "settings_permission.ini"
+settings_limitations_name = "settings_limitations.ini"
 teams = ['terrorists', 'counter-terrorists']
 
 # --------------------IMPORTANT--------------------#
 config_ini = get_config(config_name, config_types[0])
 settings_template = get_config(settings_template_name, config_types[1])
+settings_permission = get_config(settings_permission_name, config_types[2])
+settings_limitations = get_config(settings_limitations_name, config_types[3])
 app_section = config_ini.get("APP") if config_ini.get("APP") else {}
 api_section = config_ini.get("API") if config_ini.get("API") else {}
 web_section = config_ini.get("WEBSITE") if config_ini.get("WEBSITE") else {}
@@ -163,8 +175,9 @@ def index():
 @login_required
 def home_view():
     home = {"me": current_user.api.me,
-            "games": shuffle_games(current_user.api.csgo_games)[0:current_user.settings['home']['last_games_count']],
-            "ranks": ranks}
+            "games": shuffle_games(current_user.api.csgo_games)[0:current_user.settings['home']['last_games_size']],
+            "ranks": ranks,
+            "loading_status": generate_loading_status('home', users[current_user.username]['task'])}
     return render_template("home.html", **generate_default(current_user.api.me), **home)
 
 
@@ -202,7 +215,8 @@ def games_view(page=1):
              "settings": current_user.settings.get('games'),
              "games": shuffled_games[page_size * (page - 1):page_size * page],
              "me": current_user.api.me,
-             "paginator": generate_paginator(page, max_page)}
+             "paginator": generate_paginator(page, max_page),
+             "loading_status": generate_loading_status('games', users[current_user.username]['task'])}
     return render_template("games.html", **generate_default(current_user.api.me), **games)
 
 
@@ -210,14 +224,24 @@ def games_view(page=1):
 @login_required
 def settings_view():
     if request.method == 'POST':
-        if int(request.form.get("gamesCount")) > 0 and int(request.form.get("gamesCount")) < 6:
-            current_user.settings['home']['last_games_count'] = int(request.form.get("gamesCount"))
-        if request.form.get("iconLoad"):
-            if request.form.get("iconLoad") == "on":
-                current_user.settings['games']['load_icons'] = True
-            else:
-                current_user.settings['games']['load_icons'] = False
-    return render_template("settings.html", **generate_default(current_user.api.me), settings=current_user.settings)
+        data = dict(request.get_json())
+        for category in data.keys():
+            if settings_permission['settings'][category]:
+                for key in data[category]:
+                    if key in settings_limitations.keys():
+                        if isinstance(data[category][key], int):
+                            if data[category][key] >= settings_limitations[key]['min'] and \
+                                    data[category][key] <= settings_limitations[key]['max']:
+                                users[current_user.username]['settings'][category][key] = data[category][key]
+                    elif isinstance(data[category][key], bool):
+                        if data[category][key] == "on":
+                            users[current_user.username]['settings'][category][key] = True
+                        else:
+                            users[current_user.username]['settings'][category][key] = False
+                    else:
+                        users[current_user.username]['settings'][category][key] = data[category][key]
+    return render_template("settings.html", **generate_default(current_user.api.me), settings=current_user.settings,
+                           loading_status=generate_loading_status('settings', users[current_user.username]['task']))
 
 
 @app.route(sitemap['login'], methods=['POST', 'GET'])
@@ -369,8 +393,8 @@ if __name__ == '__main__':
         else:
             print("Server is NOT accessible from internet")
             if bool(app_section.get("DEV_MODE")):
-                app.config['DEBUG'] = bool(web_section.get("DEV_MODE"))
-                app.run(port=8080)
+                app.config['DEBUG'] = True
+                app.run(port=8080, debug=True)
             else:
                 serve(app, port=8080)
     except Exception as e:

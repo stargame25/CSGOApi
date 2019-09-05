@@ -6,22 +6,43 @@ import string
 import json
 from random import choice
 
-config_types = ['default', 'template']
+config_types = ['default', 'template', 'permission', 'limitations']
 
 default_config = {
     'api': {'api_key': None},
     'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
                 'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': 1, 'threads': 16, 'version': '0.7.2.1'}
+    'app': {'online': 1, 'dev_mode': True, 'threads': 16, 'version': '0.7.7'}
+}
+
+task_relations = {
+    'home': ['main'],
+    'statistic': ['main'],
+    'profile': [],
+    'games': ['main'],
+    'settings': []
 }
 
 settings_template = {
-    'login': {},
-    'home': {'last_games_count': 2},
+    'home': {'last_games_size': 3},
     'statistic': {},
     'profile': {},
     'games': {"page_size": 10, "load_icons": False},
     'settings': {}
+}
+
+settings_permission = {
+    'settings': {
+        'home': True,
+        'games': True
+    }
+}
+
+settings_limitations = {
+    'page_size': {
+        'max': 5,
+        'min': 2
+    }
 }
 
 
@@ -37,8 +58,10 @@ def read_json_file(path, filename):
 
 def get_config(config_name, type):
     out = {}
+    if not path.isdir("configs"):
+        mkdir("configs")
     try:
-        with open(config_name, "r") as conf:
+        with open('configs\\' + config_name, "r") as conf:
             category = None
             for line in conf:
                 if line.strip():
@@ -68,13 +91,17 @@ def get_config(config_name, type):
                 generate_config(config_name, default_config, True)
             elif type == config_types[1]:
                 generate_config(config_name, settings_template)
+            elif type == config_types[2]:
+                generate_config(config_name, settings_permission)
+            elif type == config_types[3]:
+                generate_config(config_name, settings_limitations)
             return get_config(config_name, type)
         else:
             return {}
 
 
 def set_config(config_name, data, upper=False):
-    with open(config_name, 'w') as file:
+    with open('configs\\' + config_name, 'w') as file:
         for item in data:
             if upper:
                 file.write(item.upper() + '\n')

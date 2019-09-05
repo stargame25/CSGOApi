@@ -48,3 +48,9 @@ function tick() {
         sec.getElementsByTagName("span")[0].textContent = timer.getSeconds();
     }
 }
+
+
+function preloaderContinue(event){
+    let loader = document.getElementById("loader");
+    loader.style.display = "none";
+}

@@ -53,7 +53,12 @@ function togglePreloader(state=true){
 
 function showError(error){
     let errorSpan = errorDiv.getElementsByTagName("span")[0];
-    errorSpan.textContent = error;
+    let clonedSpan = errorSpan.cloneNode();
+    if(errorSpan){
+        errorSpan.remove()
+    }
+    clonedSpan.textContent = error;
+    errorDiv.appendChild(clonedSpan);
     errorDiv.hidden = false;
     togglePreloader(false);
 }
@@ -154,13 +159,13 @@ function loginIn(){
                     }
                 } else {
                     logginFailure("З'єднання з сервером відсутнє");
-                    return;
+                    return null;
                 }
             };
             xhr.send(data);
         } else {
-            logginFailure("Помилка сервера")
-            return;
+            logginFailure("Помилка сервера");
+            return null;
         }
     };
     xhr.send(data);

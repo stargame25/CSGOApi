@@ -29,12 +29,33 @@ a {
 
 #sidebar {
     position: fixed;
+    z-index: 100;
     height: 100vh;
     width: 210px;
     overflow-y: hidden;
     overflow-x: hidden;
     background-color: #222b3a;
     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+#loader{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0, 0.5);
+    font-family: 'Roboto', sans-serif;
+    font-size: 14pt;
+    z-index: 10;
+}
+
+#loaderContinue{
+    color: rgba(240, 240, 240, 1);
 }
 
 .bans {
@@ -77,19 +98,27 @@ a {
 #title {
     font-size: 36pt;
     text-align: left;
+    margin-bottom: 10px;
 }
 
 #content {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     width: auto;
     font-family: 'Roboto', sans-serif;
 }
 
 #content > div {
-    padding: 20px 20px;
+    padding: 20px;
+    background-color: #dcdcdc21;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 2px;
+    margin-bottom: 20px;
+}
+
+#content > div:not(:last-child) {
+    margin-right: 20px;
 }
 
 #conStat {
@@ -144,7 +173,7 @@ a {
     margin-left: 10px;
 }
 
-@media only screen and (max-device-width: 961px) {
+@media only screen and (max-device-width: 1055px) {
     #Header {
         display: block;
         height: 70px;

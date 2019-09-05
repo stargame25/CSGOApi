@@ -23,7 +23,11 @@
 }
 
 .textR {
-    justify-self: right;
+    text-align: right !important;
+}
+
+.textL {
+    text-align: left !important;
 }
 
 #rank_competitive {
@@ -52,11 +56,11 @@
 }
 
 #avatar {
-    height: 210px;
-    width: 210px;
+    height: 216px;
+    width: 216px;
     background-image: url('../img/avatar.png');
     background-repeat: no-repeat;
-    background-size: 210px;
+    background-size: 216px;
     border-radius: 5px;
 
 }
@@ -99,7 +103,7 @@
 
 #profileCSGO > div {
     display: grid;
-    grid-template-columns: 120px 100px 60px 80px 80px 50px;
+    grid-template-columns: 120px 100px 70px 80px 80px 50px;
 }
 
 #profileCSGOheader > div {
@@ -116,26 +120,27 @@
     text-align: left;
 }
 
-table#matchesTable {
-    width: 500px;
-    border-collapse: collapse;
+#matchesTable {
+    display: grid;
+    grid-template-rows: 26px;
+    grid-auto-rows: 70px;
 }
 
-table#matchesTable > tbody > tr {
-    height: 70px;
+#matchesTable > *{
     border-bottom: 1px solid #cccccc;
+    display: grid;
+    grid-template-columns: 150px 100px 70px 100px 100px;
+    align-items: center;
 }
 
-table#matchesTable > tbody > tr#matchesHeader {
+#matchesTable > div#matchesHeader {
     border-bottom: 1px solid #aaaaaa;
-    height: 40px;
 }
 
 .map {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 70px;
+    justify-content: left;
 }
 
 .mapIcon {
@@ -145,26 +150,6 @@ table#matchesTable > tbody > tr#matchesHeader {
     background-repeat: no-repeat;
     background-size: 50px 50px;
     padding-right: 5px;
-}
-
-.mapName {
-    width: 150px;
-}
-
-.gameDate {
-    width: 100px;
-}
-
-.gameDuration {
-    width: 100px;
-}
-
-.gameTime {
-    width: 75px;
-}
-
-.gameStatus {
-    width: 90px;
 }
 
 .statusInfo {
@@ -207,41 +192,5 @@ table#matchesTable > tbody > tr#matchesHeader {
     background-size: 50px 50px;
 }
 
-@media only screen and (max-device-width: 961px) {
-    #graphs > * {
-        display: none;
-    }
-
-    #graphs {
-        display: none;
-    }
-
-    #profileCSGO.col {
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-    }
-
-    #profileCSGO.row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #content > div {
-        padding: 0;
-    }
-
-    #profileCSGO {
-        display: grid;
-        grid-template-columns: 90px auto auto !important;
-    }
-
-    #profileCSGO > div {
-        display: grid;
-        grid-template-rows: 30px 40px 30px 30px 30px 30px !important;
-    }
-
-    #profileInfo {
-        width: 320px;
-    }
+@media only screen and (max-device-width: 1055px) {
 }

@@ -2,38 +2,43 @@
 {% block linkrefs %}
     <link rel="stylesheet" href={{ url_for('static', filename="css/settings.css") }}>
 {% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}
 {% block title %}Настройки{% endblock %}
 {% block title2 %}Настройки{% endblock %}
 {% block content %}
-    <form id="settings" method="POST" action="/settings">
-        <div class="container">
-            <div class="homePage">
+    <div class="container">
+        <div class="settingSection">
+            <div class="homeSection">
                 <div class="sectionTitle"><span>Головна</span></div>
                 <div class="sectionTab">
                     <div><span class="settingsTitle">Кількість матчів</span></div>
                     <div class="setSection">
-                        <input id="gamesCount" type="number" name="gamesCount" min="1" max="5"
-                               value="{{ settings.get('home').get('last_games_count') }}"><label for="gamesCount">Кількість
+                        <input id="gamesCount" type="number" name="last_games_size" min="1" max="5"
+                               value="{{ settings.get('home').get('last_games_size') }}"><label for="gamesCount">Кількість
                         останніх ігр</label>
                     </div>
                 </div>
             </div>
-            <div class="gamesPage">
+            <div class="gamesSection">
                 <div class="sectionTitle"><span>Матчі</span></div>
                 <div class="sectionTab">
                     <div><span class="settingsTitle">Загрузка картинок профілів</span></div>
                     <div class="setSection">
-                        <input value="on" type="radio"
-                               name="iconLoad" {{ "checked" if settings.get('games').get('load_icons') }}><label for="Icons">Загружати</label>
-                        <input value="off" type="radio"
-                               name="iconLoad" {{ "checked" if not settings.get('games').get('load_icons') }}><label
-                            for="Icons">Вимкнути</label>
+                        <input value="on" type="radio" name="load_icons"
+                                {{ "checked" if settings.get('games').get('load_icons') }}>
+                        <label for="Icons">Загружати</label>
+                        <input value="off" type="radio" name="load_icons"
+                                {{ "checked" if not settings.get('games').get('load_icons') }}>
+                        <label for="Icons">Вимкнути</label>
                     </div>
                 </div>
             </div>
-            <div class="saveContainer">
-                <input class="save" id="" value="Зберегти" type="submit">
-            </div>
         </div>
-    </form>
+
+        <div class="saveContainer">
+            <input class="save" id="" value="Зберегти" type="submit" onclick="submit()">
+        </div>
+    </div>
 {% endblock %}
