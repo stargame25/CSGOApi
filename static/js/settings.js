@@ -6,11 +6,11 @@ function submit(){
         let data = serialize(category.querySelectorAll("[name]:not(meta)"));
         let temp = {};
         for(let key in data){
-            temp[key] = data[key]
+            temp[key] = data[key];
         }
-        form[category.className.replace("Section", "")] = temp;
+        form[category.className.replace("Section", "").trim()] = temp;
     });
-    console.log(JSON.stringify(form))
+    console.log(JSON.stringify(form));
     xhr.open('POST', '/settings');
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -26,7 +26,7 @@ function serialize(nodeList){
     const typeList = {};
     const names = [...new Set([].map.call(nodeList, function(item){
         typeList[item.name] = item.type;
-        return item.name;
+        return item.name.trim();
     }))];
     names.forEach(name => {
         if(typeList[name] === 'radio'){
@@ -51,7 +51,7 @@ function serialize(nodeList){
             let arrayValue = [].filter.call(nodeList, item => item.name === name);
             arrayValue.forEach(item => {
                 if(isNaN(Number(item.value))){
-                    result[name] = item.value;
+                    result[name] = item.value.trim();
                 } else {
                     result[name] = Number(item.value);
                 }

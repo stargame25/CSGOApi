@@ -16,154 +16,158 @@
 {% block content %}
     <div id="tooltip" style="display: none"></div>
     <div class="gamesList">
-    {% if games %}
-        {% for game in games %}
-            <div class="gameBlock">
-                <div class="game {{ "winBorder" if game.get('stat').get('status') == 1 else ("loseBorder" if game.get('stat').get('status') == -1 else "drawBorder") }}">
-                    <div class="gameNumber"><span>{{ loop.index + ((page-1) * page_size) }}.</span></div>
-                    <div class="gameStat">
-                        <div class="gameMode">
-                            <div class="mode">{{ game.get('info').get('gamemode')|get_gamemode }}</div>
-                            <div class="map">
-                                <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
-                                <div class="title">{{ game.get('info').get('gamemode')|get_map_space }}</div>
-                            </div>
-                        </div>
-                        <div class="gameScore">
-                            <div class="scoreWrapper">
-                                {% set game_score_list = game.get('stat').get('game_score').split(":") %}
-                                <div class="scoreNumber">{{ game_score_list[0] }}</div>
-                                <div style="width: 10px">:</div>
-                                <div class="scoreNumber">{{ game_score_list[1] }}</div>
-                            </div>
-                        </div>
-                        <div class="gameTime">
-                            <div class="date">Дата: {{ game.get('info').get('date') }}</div>
-                            <div class="duration">
-                                <span>Тривалість: {{ game.get('info').get('play_time') }}</span>
-                                <span>Пошук: {{ game.get('info').get('search_time') }}</span>
-                            </div>
-                        </div>
-                        <div class="gameStatus">
-                            <div class="status">Статус: <span
-                                    class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
-                            </div>
-                            <div class="cheatNumber"><span
-                                    class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "" }}">Порушників: <span
-                                    class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "banned important" }}">{{ (game.get('cheats') or [])|length }}</span></span>
-                            </div>
-                        </div>
-                        <div class="more">
-                            <a><i onclick="displayGame(event)" class="fas fa-caret-square-down"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="details" style="display: none">
-                    <div class="gameDetails">
-                        <div class="gameStatDetails">
-                            <div class="screenWrapper">
-                                <div class="screen {{ "s_" + game.get('info').get('gamemode')|get_map|lower }}"></div>
-                            </div>
-                            <div class="detailsInfo">
-                                <div class="mapHeader">
+        {% if games %}
+            {% for game in games %}
+                <div class="gameBlock">
+                    <div class="game {{ "winBorder" if game.get('stat').get('status') == 1 else ("loseBorder" if game.get('stat').get('status') == -1 else "drawBorder") }}">
+                        <div class="gameNumber"><span>{{ loop.index + ((page-1) * page_size) }}.</span></div>
+                        <div class="gameStat">
+                            <div class="gameMode">
+                                <div class="mode">{{ game.get('info').get('gamemode')|get_gamemode }}</div>
+                                <div class="map">
                                     <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
-                                    <span class="mapTitle">Demolition {{ game.get('info').get('gamemode')|get_map_space }}</span>
+                                    <div class="title">{{ game.get('info').get('gamemode')|get_map_space }}</div>
                                 </div>
-                                <div class="gameScoreBig"><span
-                                        class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('game_score') }}</span>
+                            </div>
+                            <div class="gameScore">
+                                <div class="scoreWrapper">
+                                    {% set game_score_list = game.get('stat').get('game_score').split(":") %}
+                                    <div class="scoreNumber">{{ game_score_list[0] }}</div>
+                                    <div style="width: 10px">:</div>
+                                    <div class="scoreNumber">{{ game_score_list[1] }}</div>
                                 </div>
-                                {% if game.get('info').get('replay') %}
-                                    <div class="demo"><a href="{{ game.get('info').get('replay') }}"><input
-                                            class="downloadDemo"
-                                            type="button"
-                                            value="Download Demo"></a>
-                                    </div>
-                                {% endif %}
+                            </div>
+                            <div class="gameTime">
+                                <div class="date">Дата: {{ game.get('info').get('date') }}</div>
+                                <div class="duration">
+                                    <span>Тривалість: {{ game.get('info').get('play_time') }}</span>
+                                    <span>Пошук: {{ game.get('info').get('search_time') }}</span>
+                                </div>
+                            </div>
+                            <div class="gameStatus">
+                                <div class="status">Статус: <span
+                                        class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
+                                </div>
+                                <div class="cheatNumber"><span
+                                        class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "" }}">Порушників: <span
+                                        class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "banned important" }}">{{ (game.get('cheats') or [])|length }}</span></span>
+                                </div>
+                            </div>
+                            <div class="more">
+                                <a><i onclick="displayGame(event)" class="fas fa-caret-square-down"></i></a>
                             </div>
                         </div>
-                        {% if game.get('round_line') != None %}
-                            <div class="roundsLine">
-                                <div class="roundsContainer">
-                                    <div class="round rLoseK">
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
+                    </div>
+                    <div class="details" style="display: none">
+                        <div class="gameDetails">
+                            <div class="gameStatDetails">
+                                <div class="screenWrapper">
+                                    <div class="screen {{ "s_" + game.get('info').get('gamemode')|get_map|lower }}"></div>
+                                </div>
+                                <div class="detailsInfo">
+                                    <div class="mapHeader">
+                                        <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
+                                        <span class="mapTitle">Demolition {{ game.get('info').get('gamemode')|get_map_space }}</span>
                                     </div>
-
-                                    <div class="round rWinK">
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
+                                    <div class="gameScoreBig"><span
+                                            class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('game_score') }}</span>
                                     </div>
-
-                                    <div class="round rWin"></div>
-
-                                    <div class="round rWinK">
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
-                                        <div class="killIcon"></div>
-                                    </div>
+                                    {% if game.get('info').get('replay') %}
+                                        <div class="demo"><a href="{{ game.get('info').get('replay') }}"><input
+                                                class="downloadDemo"
+                                                type="button"
+                                                value="Download Demo"></a>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                        {% endif %}
-                        <div class="playerBoard">
-                            <div class="row">
-                                {% for team in ['terrorists', 'counter-terrorists'] %}
-                                    <div class="col teamBoard">
-                                        <div class="teamHeader">
-                                            <div class="teamLogo"></div>
-                                            <span class="team">{{ team|upper }}</span>
-                                            <div class="teamLogo"></div>
+                            {% if game.get('round_line') != None %}
+                                <div class="roundsLine">
+                                    <div class="roundsContainer">
+                                        <div class="round rLoseK">
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
                                         </div>
-                                        <div class="flexRow kdaHeader">
-                                            <div class="ping">Ping</div>
-                                            <div class="playerName">Player</div>
-                                            <div class="score">Score</div>
-                                            <div class="kills">Kills</div>
-                                            <div class="assists">Assists</div>
-                                            <div class="deaths">Deaths</div>
-                                            <div class="mvps">MVPs</div>
-                                            <div class="hsPerc">HS %</div>
+
+                                        <div class="round rWinK">
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
                                         </div>
-                                        {% for player in game.get('stat').get(team) %}
-                                            <div class="flexRow {{ "me" if player.get('player_name') == me.get('name') else "" }}">
-                                                <div class="ping">{{ player.get('ping') or 0 }}</div>
-                                                <div class="playerName">
-                                                    {% if settings.get('load_icons') %}
-                                                        <a href="{{ player.get('profile_link') or "" }}">
-                                                            <img class="playerIcon" src="#"
-                                                                 temp="{{ player.get('player_icon') or "" }}" alt="">
-                                                        </a>
-                                                    {% endif %}
-                                                    <a onmousemove="playerShowBan(event)" onmouseout="tooltipHide()"
-                                                       class="player {{ ("banned" if (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list)[0].get('after') == True else "notafter")
-                                                if (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list) else "" }}"
-                                                       href="{{ player.get('profile_link') or "" }}"
-                                                       ban="{{ (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list) }}">
-                                                        {{ player.get('player_name') or "" }}
-                                                    </a>
-                                                </div>
-                                                <div class="score">{{ player.get('score') or 0 }}</div>
-                                                <div class="kills">{{ player.get('kills') or 0 }}</div>
-                                                <div class="assists">{{ player.get('assists') or 0 }}</div>
-                                                <div class="deaths">{{ player.get('deaths') or 0 }}</div>
-                                                <div class="mvps">{{ player.get('mvps') or 0 }}</div>
-                                                <div class="hsPerc">{{ player.get('hs_percent') or 0 }}</div>
-                                            </div>
-                                        {% endfor %}
+
+                                        <div class="round rWin"></div>
+
+                                        <div class="round rWinK">
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
+                                            <div class="killIcon"></div>
+                                        </div>
                                     </div>
-                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="playerBoard">
+                                <div class="row">
+                                    {% for team in ['terrorists', 'counter-terrorists'] %}
+                                        <div class="col teamBoard">
+                                            <div class="teamHeader">
+                                                <div class="teamLogo"></div>
+                                                <span class="team">{{ team|upper }}</span>
+                                                <div class="teamLogo"></div>
+                                            </div>
+                                            <div class="flexRow kdaHeader">
+                                                <div class="ping">Ping</div>
+                                                <div class="playerName">Player</div>
+                                                <div class="score">Score</div>
+                                                <div class="kills">Kills</div>
+                                                <div class="assists">Assists</div>
+                                                <div class="deaths">Deaths</div>
+                                                <div class="mvps">MVPs</div>
+                                                <div class="hsPerc">HS %</div>
+                                            </div>
+                                            {% for player in game.get('stat').get(team) %}
+                                                <div class="flexRow {{ "me" if player.get('player_name') == me.get('name') else "" }}">
+                                                    <div class="ping">{{ player.get('ping') or 0 }}</div>
+                                                    <div class="playerName">
+                                                        {% if settings.get('load_icons') %}
+                                                            <a href="{{ player.get('profile_link') or "" }}">
+                                                                <img class="playerIcon" src="#"
+                                                                     temp="{{ player.get('player_icon') or "" }}"
+                                                                     alt="">
+                                                            </a>
+                                                        {% endif %}
+                                                        <a onmousemove="playerShowBan(event)" onmouseout="tooltipHide()"
+                                                           class="player {{ ("banned" if (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list)[0].get('after') == True else "notafter")
+                                                if (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list) else "" }}"
+                                                           href="{{ player.get('profile_link') or "" }}"
+                                                           ban="{{ (game.get('cheats')|selectattr('steamid', 'equalto', player.get('steamid')) | list) }}">
+                                                            {{ player.get('player_name') or "" }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="score">{{ player.get('score') or 0 }}</div>
+                                                    <div class="kills">{{ player.get('kills') or 0 }}</div>
+                                                    <div class="assists">{{ player.get('assists') or 0 }}</div>
+                                                    <div class="deaths">{{ player.get('deaths') or 0 }}</div>
+                                                    <div class="mvps">{{ player.get('mvps') or 0 }}</div>
+                                                    <div class="hsPerc">{{ player.get('hs_percent') or 0 }}</div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            {% endfor %}
             </div>
-        {% endfor %}
-    </div>
-    <div id="paginator">
-        {% for item in paginator %}
-        <div class="animated" id="{{ "selected" if page == item else "" }}"><a href="{{ item }}">{{ item }}</a></div>
-        {% endfor %}
-    </div>
-    {% endif %}
+            <div id="paginator">
+                {% for item in paginator %}
+                    <div class="animated" id="{{ "selected" if page == item else "" }}"><a
+                            href="{{ item }}">{{ item }}</a></div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty"><span class="title">Відсутньо</span><span>На даний момент нема зіграних ігр</span></div>
+        {% endif %}
 {% endblock %}

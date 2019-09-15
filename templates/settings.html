@@ -10,7 +10,10 @@
 {% block content %}
     <div class="container">
         <div class="settingSection">
-            <div class="homeSection">
+            <div class="homeSection {{ "" if permissions['home'] else "locked" }}">
+                {% if not permissions['home'] %}
+                    <div class="lock"></div>
+                {% endif %}
                 <div class="sectionTitle"><span>Головна</span></div>
                 <div class="sectionTab">
                     <div><span class="settingsTitle">Кількість матчів</span></div>
@@ -21,7 +24,10 @@
                     </div>
                 </div>
             </div>
-            <div class="gamesSection">
+            <div class="gamesSection {{ "" if permissions['games'] else "locked" }}">
+                {% if not permissions['games'] %}
+                    <div class="lock"></div>
+                {% endif %}
                 <div class="sectionTitle"><span>Матчі</span></div>
                 <div class="sectionTab">
                     <div><span class="settingsTitle">Загрузка картинок профілів</span></div>

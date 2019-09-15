@@ -192,5 +192,12 @@
     background-size: 50px 50px;
 }
 
+.empty{
+    width: 100%;
+    display: flex !important;
+    height: 100%;
+    justify-content: center;
+}
+
 @media only screen and (max-device-width: 1055px) {
 }

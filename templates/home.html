@@ -5,7 +5,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename="css/csgomisc.css") }}>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
 {% block title %}Головна{% endblock %}
 {% block title2 %}Головна{% endblock %}
@@ -18,7 +18,8 @@
             <div class="col" id="profileInfo">
                 <div class="row">
                     <div class="col" id="profileName">
-                        <div id="country" style="background-image: url({{ url_for('static', filename=('img/countries/' + me.get('country')|country + '.png')) }});"></div>
+                        <div id="country"
+                             style="background-image: url({{ url_for('static', filename=('img/countries/' + me.get('country')|country + '.png')) }});"></div>
                         <div>{{ me.get("name") or 'Unknown' }}</div>
                     </div>
                 </div>
@@ -36,7 +37,8 @@
                         <div class="row">
                             <div>Змагальний</div>
                             <div>
-                                <div id="rank_competitive" style="background-image: url('static/img/ranks/{{ me.get('competitive').get('rank') | get_c_rank_image }}.png');"></div>
+                                <div id="rank_competitive"
+                                     style="background-image: url('static/img/ranks/{{ me.get('competitive').get('rank') | get_c_rank_image }}.png');"></div>
                             </div>
                             <div class="textR">{{ games_sum | sum }}</div>
                             <div class="textR">{{ me.get('competitive').get('wins') or 0 }}</div>
@@ -60,7 +62,8 @@
                         <div class="row">
                             <div>Напарники</div>
                             <div>
-                                <div id="rank_wingman" style="background-image: url('static/img/ranks/{{ me.get('wingman').get('rank') | get_w_rank_image }}.png')"></div>
+                                <div id="rank_wingman"
+                                     style="background-image: url('static/img/ranks/{{ me.get('wingman').get('rank') | get_w_rank_image }}.png')"></div>
                             </div>
                             <div class="textR">{{ games_sum | sum }}</div>
                             <div class="textR">{{ me.get('wingman').get('wins') or 0 }}</div>
@@ -92,6 +95,7 @@
                 <div class="gameDuration">Тривалість</div>
                 <div class="gameStatus">Статус</div>
             </div>
+            {% if games %}
             {% for game in games %}
                 <div>
                     <div class="map">
@@ -106,6 +110,9 @@
                     </div>
                 </div>
             {% endfor %}
+            {% else %}
+                <div class="empty"><span>На даний момент відсутні останні ігри</span></div>
+            {% endif %}
         </div>
     </div>
     <!--

@@ -54,8 +54,12 @@ class AsyncTask(threading.Thread):
             self.finished = True
 
     def run(self):
-        if self.method:
-            self.method()
+        try:
+            if self.method:
+                self.method()
+        except Exception as e:
+            print("Error occurred in user-thread. User: " + str(self.username))
+            logg(str(traceback.format_exc()))
         self.finished = True
 
 
@@ -96,14 +100,14 @@ def generate_loading_status(page, task):
 
 config_name = "config.ini"
 settings_template_name = "settings_template.ini"
-settings_permission_name = "settings_permission.ini"
+settings_permissions_name = "settings_permissions.ini"
 settings_limitations_name = "settings_limitations.ini"
 teams = ['terrorists', 'counter-terrorists']
 
 # --------------------IMPORTANT--------------------#
 config_ini = get_config(config_name, config_types[0])
 settings_template = get_config(settings_template_name, config_types[1])
-settings_permission = get_config(settings_permission_name, config_types[2])
+settings_permissions = get_config(settings_permissions_name, config_types[2])
 settings_limitations = get_config(settings_limitations_name, config_types[3])
 app_section = config_ini.get("APP") if config_ini.get("APP") else {}
 api_section = config_ini.get("API") if config_ini.get("API") else {}
@@ -224,24 +228,22 @@ def games_view(page=1):
 @login_required
 def settings_view():
     if request.method == 'POST':
-        data = dict(request.get_json())
+        data = request.get_json()
         for category in data.keys():
-            if settings_permission['settings'][category]:
-                for key in data[category]:
+            if settings_permissions['settings'].get(category):
+                for key in data[category].keys():
                     if key in settings_limitations.keys():
                         if isinstance(data[category][key], int):
                             if data[category][key] >= settings_limitations[key]['min'] and \
                                     data[category][key] <= settings_limitations[key]['max']:
                                 users[current_user.username]['settings'][category][key] = data[category][key]
                     elif isinstance(data[category][key], bool):
-                        if data[category][key] == "on":
-                            users[current_user.username]['settings'][category][key] = True
-                        else:
-                            users[current_user.username]['settings'][category][key] = False
+                        users[current_user.username]['settings'][category][key] = bool(data[category][key])
                     else:
                         users[current_user.username]['settings'][category][key] = data[category][key]
     return render_template("settings.html", **generate_default(current_user.api.me), settings=current_user.settings,
-                           loading_status=generate_loading_status('settings', users[current_user.username]['task']))
+                           loading_status=generate_loading_status('settings', users[current_user.username]['task']),
+                           permissions=settings_permissions['settings'])
 
 
 @app.route(sitemap['login'], methods=['POST', 'GET'])

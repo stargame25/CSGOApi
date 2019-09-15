@@ -490,3 +490,13 @@
     width: 30px;
     background-size: 30px;
 }
+
+.empty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty > *:not(:last-child){
+    margin-bottom: 20px;
+}

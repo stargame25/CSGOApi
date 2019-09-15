@@ -31,7 +31,7 @@ settings_template = {
     'settings': {}
 }
 
-settings_permission = {
+settings_permissions = {
     'settings': {
         'home': True,
         'games': True
@@ -92,7 +92,7 @@ def get_config(config_name, type):
             elif type == config_types[1]:
                 generate_config(config_name, settings_template)
             elif type == config_types[2]:
-                generate_config(config_name, settings_permission)
+                generate_config(config_name, settings_permissions)
             elif type == config_types[3]:
                 generate_config(config_name, settings_limitations)
             return get_config(config_name, type)
