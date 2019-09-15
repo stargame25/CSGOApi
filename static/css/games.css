@@ -90,7 +90,7 @@
     width: 480px;
     height: 200px;
     background-position: center;
-    background-image: url('../img/1080p/default.png');
+    background-image: url('../img/360p/default.png');
     background-repeat: no-repeat;
     background-size: 480px 270px;
     border-radius: 6px;
@@ -176,15 +176,6 @@
     font-size: 24pt;
     margin-right: 20px;
     color: #2b323e;
-}
-
-.arrow {
-    width: 25px;
-    height: 25px;
-    /*background-color: #fff; */
-    margin-right: 10px;
-    background-image: url('../img/arrow.png');
-    background-size: 25px;
 }
 
 .unimportant {
