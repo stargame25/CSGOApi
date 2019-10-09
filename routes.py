@@ -1,143 +1,18 @@
-import sys
-import traceback
-import threading
-from ctypes import pythonapi, py_object
-from os.path import join as path_join
 from copy import deepcopy
-from tools import *
-from api import *
-from countries import *
-from waitress import serve
-from flask import Flask, render_template, session, escape, request, json, redirect, url_for, jsonify, \
-    send_from_directory
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask import Blueprint, request, Response, render_template, redirect, url_for, session, flash, \
+    send_from_directory, send_file, jsonify
+from flask_login import login_user, current_user, logout_user, login_required
+from csgoapi import GLOBAL_API_KEY, users, login_manager, sitemap, \
+    settings_template, settings_permissions, settings_limitations
+from csgoapi.tools import *
+from csgoapi.api import *
+from csgoapi.models import *
 
-users = {}
-
-
-class User(UserMixin):
-    id = None
-    username = None
-    api = None
-    settings = None
-
-    def __init__(self, _username, _api, _settings):
-        self.username = _username
-        self.api = _api
-        self.settings = _settings
-
-    def get_id(self):
-        return self.username
-
-
-class AsyncTask(threading.Thread):
-    def __init__(self, username="", name="", method=None):
-        threading.Thread.__init__(self)
-        self.username = username
-        self.name = name
-        self.method = method
-        self.finished = False if method else True
-
-    def get_id(self):
-        if hasattr(self, '_thread_id'):
-            return self._thread_id
-        for id, thread in threading._active.items():
-            if thread is self:
-                return id
-
-    def stop(self):
-        thread_id = self.get_id()
-        res = pythonapi.PyThreadState_SetAsyncExc(thread_id, py_object(SystemExit))
-        if res > 1:
-            pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
-        else:
-            self.finished = True
-
-    def run(self):
-        try:
-            if self.method:
-                self.method()
-        except Exception as e:
-            print("Error occurred in user-thread. User: " + str(self.username))
-            logg(str(traceback.format_exc()))
-        self.finished = True
-
-
-def add_task(username, task, method):
-    if users[username]['task'].finished:
-        async_job = AsyncTask(username, task, method)
-        users[username]['task'] = async_job
-        async_job.setDaemon(True)
-        async_job.start()
-
-
-def generate_default(me):
-    version = app_section.get("VERSION")
-    conn = CSGOApi.check_steam_status()
-    perm_ban = None
-    CSGO = None
-    Steam = None
-    VAC = None
-    overwatch = None
-    expire = ""
-    if me:
-        if me.get('cooldown'):
-            expire = me.get('cooldown').get('expire')
-        if me.get('VAC'):
-            VAC = "VAC"
-        if me.get('overwatch'):
-            overwatch = "overwatch"
-    return {"version": version, "conn": conn, "perm_ban": perm_ban, "temp_ban": gen_temp_ban(expire)}
-
-
-def generate_loading_status(page, task):
-    if page in task_relations.keys():
-        if not task.finished:
-            if task.name in task_relations[page]:
-                return True
-    return False
-
-
-config_name = "config.ini"
-settings_template_name = "settings_template.ini"
-settings_permissions_name = "settings_permissions.ini"
-settings_limitations_name = "settings_limitations.ini"
-teams = ['terrorists', 'counter-terrorists']
-
-# --------------------IMPORTANT--------------------#
-config_ini = get_config(config_name, config_types[0])
-settings_template = get_config(settings_template_name, config_types[1])
-settings_permissions = get_config(settings_permissions_name, config_types[2])
-settings_limitations = get_config(settings_limitations_name, config_types[3])
-app_section = config_ini.get("APP") if config_ini.get("APP") else {}
-api_section = config_ini.get("API") if config_ini.get("API") else {}
-web_section = config_ini.get("WEBSITE") if config_ini.get("WEBSITE") else {}
-GLOBAL_API_KEY = api_section.get('API_KEY') if api_section.get('API_KEY') else ''
-if getattr(sys, 'frozen', False):
-    template_folder = path_join(sys._MEIPASS, 'templates')
-    static_folder = path_join(sys._MEIPASS, 'static')
-    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
-else:
-    app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login_view"
-# --------------------IMPORTANT--------------------#
-
-
-ranks = ["Silver 1", "Silver 2", "Silver 3", "Silver 4", "Silver Elite", "Silver Elite Master ",
-         "Gold Nova 1", "Gold Nova 2", "Gold Nova 3", "Gold Nova Master", "Master Guardian 1 ",
-         "Master Guardian 2 ", "Master Guardian Elite ", "Distinguished Master Guardian", "Legendary Eagle",
-         "Legendary Eagle Master", "Supreme Master First Class ", "The Global Elite"]
-
-sitemap = dict(login='/login', logout='/logout', home='/home', statistics='/statistics', profile='/profile',
-               games='/games', games_pages='/games/<int:page>', settings='/settings', setdown='/setdown',
-               escape="/escape")
-
+website = Blueprint('csgoapi', __name__)
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect(url_for('login_view'))
+    return redirect(url_for('.login_view'))
 
 
 @login_manager.user_loader
@@ -151,59 +26,58 @@ def load_user(username):
         return User(username, api_object, settings)
 
 
-@app.errorhandler(Exception)
+@website.errorhandler(Exception)
 def all_exception_handler(error):
     print("Error occurred, watch logs folder for details")
     logg(str(traceback.format_exc()))
     return render_template("error.html"), 500
 
 
-@app.errorhandler(404)
+@website.errorhandler(404)
 def fourhounderfour(error):
-    return redirect(url_for("login_view"))
+    return redirect(url_for(".login_view"))
 
 
-@app.route('/favicon.png')
+@website.route('/favicon.png')
 def favicon():
-    return send_from_directory(path_join(app.root_path, 'static'),
+    return send_from_directory(path_join(website.root_path, 'static'),
                                'img/favicon.png', mimetype='image/vnd.microsoft.icon')
 
 
-@app.route('/')
+@website.route('/')
 @login_required
 def index():
-    return redirect(url_for('login_view'))
+    return redirect(url_for('.login_view'))
 
 
-@app.route(sitemap['home'])
+@website.route(sitemap['home'])
 @login_required
 def home_view():
     home = {"me": current_user.api.me,
             "games": shuffle_games(current_user.api.csgo_games)[0:current_user.settings['home']['last_games_size']],
-            "ranks": ranks,
             "loading_status": generate_loading_status('home', users[current_user.username]['task'])}
     return render_template("home.html", **generate_default(current_user.api.me), **home)
 
 
-@app.route(sitemap['statistics'])
+@website.route(sitemap['statistics'])
 @login_required
 def statistic_view():
     return render_template("statistics.html", **generate_default(current_user.api.me))
 
 
-@app.route(sitemap['profile'])
+@website.route(sitemap['profile'])
 @login_required
 def profile_view():
     return redirect(current_user.api.me.get('com_link'))
 
 
-@app.route(sitemap['games'])
+@website.route(sitemap['games'])
 @login_required
 def games_redirect():
-    return redirect(url_for("games_view", page=1))
+    return redirect(url_for(".games_view", page=1))
 
 
-@app.route(sitemap['games_pages'])
+@website.route(sitemap['games_pages'])
 @login_required
 def games_view(page=1):
     shuffled_games = shuffle_games(current_user.api.csgo_games)
@@ -224,7 +98,7 @@ def games_view(page=1):
     return render_template("games.html", **generate_default(current_user.api.me), **games)
 
 
-@app.route(sitemap['settings'], methods=['POST', 'GET'])
+@website.route(sitemap['settings'], methods=['POST', 'GET'])
 @login_required
 def settings_view():
     if request.method == 'POST':
@@ -246,10 +120,10 @@ def settings_view():
                            permissions=settings_permissions['settings'])
 
 
-@app.route(sitemap['login'], methods=['POST', 'GET'])
+@website.route(sitemap['login'], methods=['POST', 'GET'])
 def login_view():
     if current_user.is_authenticated:
-        return redirect(url_for('settings_view'))
+        return redirect(url_for('.settings_view'))
     else:
         if request.method == "POST":
             if request.form.get("username") and request.form.get("password") and request.form.get("timestamp"):
@@ -274,14 +148,14 @@ def login_view():
     return render_template("login.html")
 
 
-@app.route('/getrsa', methods=['POST'])
+@website.route('/getrsa', methods=['POST'])
 def getrsa():
     if request.form.get("username") and request.form.get("username") not in users.keys():
         return jsonify(WebAuth.get_rsa(request.form.get("username")))
     return 'Error', 500
 
 
-@app.route(sitemap['logout'])
+@website.route(sitemap['logout'])
 @login_required
 def logout_view():
     print(str(current_user.username) + " logged out!")
@@ -290,40 +164,40 @@ def logout_view():
     users.pop(current_user.username)
     session.clear()
     logout_user()
-    return redirect(url_for('login_view'))
+    return redirect(url_for('.login_view'))
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_map_space(text):
     return " ".join(text.split()[1:])
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_only_date(date):
     return "-".join(reversed(date.split()[0].split("-")))
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_only_time(date):
     return ":".join(date.split()[1].split(":")[0:-1])
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_map(text):
     return "".join(text.split()[1:])
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_map(text):
     return "".join(text.split()[1:])
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_map(text):
     return "".join(text.split()[1:])
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_gamemode(text):
     if text.split(" ")[0].lower() == 'competitive':
         return 'Змагальний'
@@ -331,7 +205,7 @@ def get_gamemode(text):
         return 'Напарники'
 
 
-@app.template_filter()
+@website.app_template_filter()
 def game_status(stat):
     if stat == -1:
         return "lose"
@@ -341,7 +215,7 @@ def game_status(stat):
         return "win"
 
 
-@app.template_filter()
+@website.app_template_filter()
 def game_status_text(stat):
     if stat == -1:
         return "Поразка"
@@ -351,7 +225,7 @@ def game_status_text(stat):
         return "Перемога"
 
 
-@app.template_filter()
+@website.app_template_filter()
 def sum_games(*args):
     arguments = args
     summ = 0
@@ -361,7 +235,7 @@ def sum_games(*args):
     return summ
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_c_rank_image(rank):
     if rank:
         return "c_" + rank
@@ -369,7 +243,7 @@ def get_c_rank_image(rank):
         return "c_u"
 
 
-@app.template_filter()
+@website.app_template_filter()
 def get_w_rank_image(rank):
     if rank:
         return "w_" + rank
@@ -377,27 +251,9 @@ def get_w_rank_image(rank):
         return "w_u"
 
 
-@app.template_filter()
+@website.app_template_filter()
 def country(code):
     if code:
         if code.upper() in countries.keys():
             return (countries.get(code.upper()).get('name').replace(" ", "-")).lower()
     return ""
-
-
-if __name__ == '__main__':
-    key = web_section.get('SECRET_KEY')
-    app.secret_key = randomString() if not key or len(key) < 10 else key
-    try:
-        if bool(app_section.get('ONLINE') and not app_section.get("DEV_MODE")):
-            print("Server is accessible from internet")
-            serve(app, host='0.0.0.0', port=8080, threads=threads_counts(app_section.get("THREADS")))
-        else:
-            print("Server is NOT accessible from internet")
-            if bool(app_section.get("DEV_MODE")):
-                app.config['DEBUG'] = True
-                app.run(port=8080, debug=True)
-            else:
-                serve(app, port=8080)
-    except Exception as e:
-        print("App error, server crashed")

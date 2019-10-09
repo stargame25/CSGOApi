@@ -17,22 +17,22 @@
     <div id="sidebar">
         <div id="logo"></div>
         <div id="nav">
-            <a href={{ url_for('home_view') }}>
+            <a href={{ url_for('csgoapi.home_view') }}>
                 <div class="selection home">Головна</div>
             </a>
-            <a href={{ url_for('statistic_view') }}>
+            <a href={{ url_for('csgoapi.statistic_view') }}>
                 <div class="selection statistics">Статистика</div>
             </a>
-            <a href={{ url_for('profile_view') }} target="_blank">
+            <a href={{ url_for('csgoapi.profile_view') }} target="_blank">
                 <div class="selection profile">Профіль</div>
             </a>
-            <a href={{ url_for('games_view', page=1) }}>
+            <a href={{ url_for('csgoapi.games_view', page=1) }}>
                 <div class="selection games">Матчі</div>
             </a>
-            <a href={{ url_for('settings_view') }}>
+            <a href={{ url_for('csgoapi.settings_view') }}>
                 <div class="selection settings">Настройка</div>
             </a>
-            <a href={{ url_for('logout_view') }}>
+            <a href={{ url_for('csgoapi.logout_view') }}>
                 <div class="selection logout">Вихід</div>
             </a>
         </div>

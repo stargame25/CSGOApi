@@ -1,143 +1,65 @@
-from os import mkdir, path
-import re as regex
+from os import mkdir
+from os.path import isdir, join as path_join
 import time
 import datetime
-import string
 import json
-from random import choice
-
-config_types = ['default', 'template', 'permission', 'limitations']
-
-default_config = {
-    'api': {'api_key': None},
-    'website': {"secret_key": None, 'allow_download_icons': False, 'allow_download_all_games': True,
-                'max_download_games': None},
-    'app': {'online': 1, 'dev_mode': True, 'threads': 16, 'version': '0.7.7'}
-}
-
-task_relations = {
-    'home': ['main'],
-    'statistic': ['main'],
-    'profile': [],
-    'games': ['main'],
-    'settings': []
-}
-
-settings_template = {
-    'home': {'last_games_size': 3},
-    'statistic': {},
-    'profile': {},
-    'games': {"page_size": 10, "load_icons": False},
-    'settings': {}
-}
-
-settings_permissions = {
-    'settings': {
-        'home': True,
-        'games': True
-    }
-}
-
-settings_limitations = {
-    'page_size': {
-        'max': 5,
-        'min': 2
-    }
-}
+from csgoapi import base_dir, users
+from csgoapi.api import CSGOApi
+from csgoapi.config_templates import task_relations
+from csgoapi.countries import *
+from csgoapi.models import AsyncTask
 
 
-def randomString(stringLength=32):
-    letters = string.ascii_lowercase
-    return ''.join(choice(letters) for i in range(stringLength))
+def str_to_datetime(string):
+    return datetime.datetime.strptime(string.replace(" GMT", ""), '%Y-%m-%d %H:%M:%S')
 
 
 def read_json_file(path, filename):
-    with open(path + '\\' + filename, 'r', encoding='utf8') as file:
+    folder = path_join(base_dir, path)
+    path = path_join(folder, filename)
+    with open(path, 'r', encoding='utf8') as file:
         return json.load(file)
 
 
-def get_config(config_name, type):
-    out = {}
-    if not path.isdir("configs"):
-        mkdir("configs")
-    try:
-        with open('configs\\' + config_name, "r") as conf:
-            category = None
-            for line in conf:
-                if line.strip():
-                    if regex.match(r"^\[\w+\]$", line):
-                        category = line.strip().replace('[', "").replace(']', "")
-                        out[category] = {}
-                    elif category:
-                        temp = line.strip().split("=")
-                        if temp[1]:
-                            if temp[1].lower() in ['t', 'f']:
-                                if temp[1].lower() == 't':
-                                    out[category][temp[0]] = True
-                                else:
-                                    out[category][temp[0]] = False
-                            elif temp[1].isdigit():
-                                out[category][temp[0]] = int(temp[1])
-                            else:
-                                out[category][temp[0]] = str(temp[1])
-                        else:
-                            out[category][temp[0]] = None
-                else:
-                    category = None
-        return out
-    except Exception:
-        if type in config_types:
-            if type == config_types[0]:
-                generate_config(config_name, default_config, True)
-            elif type == config_types[1]:
-                generate_config(config_name, settings_template)
-            elif type == config_types[2]:
-                generate_config(config_name, settings_permissions)
-            elif type == config_types[3]:
-                generate_config(config_name, settings_limitations)
-            return get_config(config_name, type)
-        else:
-            return {}
-
-
-def set_config(config_name, data, upper=False):
-    with open('configs\\' + config_name, 'w') as file:
-        for item in data:
-            if upper:
-                file.write(item.upper() + '\n')
-            else:
-                file.write(item + '\n')
-
-
-def generate_config(config_name, config_dict, upper=False):
-    config = []
-    for category, section in config_dict.items():
-        config.append('[' + category + ']')
-        for title, value in section.items():
-            if value is None:
-                config.append(title.strip() + '=')
-            elif isinstance(value, bool):
-                if value:
-                    config.append(title.strip() + '=' + 'T')
-                else:
-                    config.append(title.strip() + '=' + 'F')
-            elif isinstance(value, int):
-                config.append(title.strip() + '=' + str(value))
-            else:
-                config.append(title.strip() + '=' + value.strip())
-        config.append("")
-    set_config(config_name, config, upper)
-
-
-def threads_counts(count):
+def check_threads_counts(count):
     if isinstance(count, int):
         if count > 4 and count < 128:
             return count
     return 4
 
 
-def str_to_datetime(string):
-    return datetime.datetime.strptime(string.replace(" GMT", ""), '%Y-%m-%d %H:%M:%S')
+def add_task(username, task, method):
+    if users[username]['task'].finished:
+        async_job = AsyncTask(username, task, method)
+        users[username]['task'] = async_job
+        async_job.setDaemon(True)
+        async_job.start()
+
+
+def generate_default(me):
+    conn = CSGOApi.check_steam_status()
+    perm_ban = None
+    CSGO = None
+    Steam = None
+    VAC = None
+    overwatch = None
+    expire = ""
+    if me:
+        if me.get('cooldown'):
+            expire = me.get('cooldown').get('expire')
+        if me.get('VAC'):
+            VAC = "VAC"
+        if me.get('overwatch'):
+            overwatch = "overwatch"
+    return {"version": 0, "conn": conn, "perm_ban": perm_ban, "temp_ban": gen_temp_ban(expire)}
+
+
+def generate_loading_status(page, task):
+    if page in task_relations.keys():
+        if not task.finished:
+            if task.name in task_relations[page]:
+                return True
+    return False
 
 
 def gen_temp_ban(date):
@@ -199,7 +121,9 @@ def generate_paginator(page, max_page):
 
 
 def logg(trace):
-    if not path.isdir("logs"):
+    if not isdir("logs"):
         mkdir("logs")
-    with open('logs\\' + str(datetime.datetime.now()).replace(":", "-") + '.txt', "w") as file:
+    folder = path_join(base_dir, "logs")
+    path = path_join(folder, str(datetime.datetime.now()).replace(":", "-") + '.txt')
+    with open(path, "w") as file:
         file.write(trace)
