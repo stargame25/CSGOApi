@@ -9,41 +9,41 @@
 {% block title2 %}Настройки{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="settingSection">
-            <div class="homeSection {{ "" if permissions['home'] else "locked" }}">
+        <div class="setting-section">
+            <div class="home-section {{ "" if permissions['home'] else "locked" }}">
                 {% if not permissions['home'] %}
                     <div class="lock"></div>
                 {% endif %}
-                <div class="sectionTitle"><span>Головна</span></div>
-                <div class="sectionTab">
-                    <div><span class="settingsTitle">Кількість матчів</span></div>
-                    <div class="setSection">
-                        <input id="gamesCount" type="number" name="last_games_size" min="1" max="5"
-                               value="{{ settings.get('home').get('last_games_size') }}"><label for="gamesCount">Кількість
-                        останніх ігр</label>
+                <div class="section-title"><span>Головна</span></div>
+                <div class="section-tab">
+                    <div><span class="settings-title">Кількість матчів</span></div>
+                    <div class="set-section">
+                        <input id="games-count" type="number" name="last_games_size" min="1" max="5"
+                               value="{{ settings.get('home').get('last_games_size') }}">
+                        <label for="games-count">Кількість останніх ігр</label>
                     </div>
                 </div>
             </div>
-            <div class="gamesSection {{ "" if permissions['games'] else "locked" }}">
+            <div class="games-section {{ "" if permissions['games'] else "locked" }}">
                 {% if not permissions['games'] %}
                     <div class="lock"></div>
                 {% endif %}
-                <div class="sectionTitle"><span>Матчі</span></div>
-                <div class="sectionTab">
-                    <div><span class="settingsTitle">Загрузка картинок профілів</span></div>
-                    <div class="setSection">
+                <div class="section-title"><span>Матчі</span></div>
+                <div class="section-tab">
+                    <div><span class="settings-title">Загрузка картинок профілів</span></div>
+                    <div class="set-section">
                         <input value="on" type="radio" name="load_icons"
                                 {{ "checked" if settings.get('games').get('load_icons') }}>
-                        <label for="Icons">Загружати</label>
+                        <label for="icons">Загружати</label>
                         <input value="off" type="radio" name="load_icons"
                                 {{ "checked" if not settings.get('games').get('load_icons') }}>
-                        <label for="Icons">Вимкнути</label>
+                        <label for="icons">Вимкнути</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="saveContainer">
+        <div class="save-container">
             <input class="save" id="" value="Зберегти" type="submit" onclick="submit()">
         </div>
     </div>

@@ -22,15 +22,15 @@
     flex-direction: row;
 }
 
-.textR {
+.text-r {
     text-align: right !important;
 }
 
-.textL {
+.text-l {
     text-align: left !important;
 }
 
-#rank_competitive {
+#rank-competitive {
     height: 40px;
     width: 100px;
     background-repeat: no-repeat;
@@ -38,7 +38,7 @@
     background-image: url('../img/ranks/c_u.png');
 }
 
-#rank_wingman {
+#rank-wingman {
     height: 40px;
     width: 100px;
     background-repeat: no-repeat;
@@ -70,43 +70,43 @@
     width: auto;
 }
 
-.graphTitle {
+.graph-title {
     font-size: 20pt;
 }
 
-#profileIcon {
+#profile-icon {
 }
 
-#profileName {
+#profile-name {
     display: flex;
     flex-direction: row;
     font-size: 20pt;
 }
 
-#profileTable {
+#profile-table {
 }
 
-#profileCSGO > * {
+#profile-csgo* {
     text-align: left;
     align-items: center;
 }
 
-#profileInfo > tbody > tr {
+#profile-info > tbody > tr {
     height: 50px;
     width: 800px;
 }
 
-#profileCSGO {
+#profile-csgo {
     display: grid;
     grid-template-rows: repeat(3, 50px);
 }
 
-#profileCSGO > div {
+#profile-csgo > div {
     display: grid;
     grid-template-columns: 120px 100px 70px 80px 80px 50px;
 }
 
-#profileCSGOheader > div {
+#profile-csgo-header > div {
     text-align: center;
     align-items: center;
 }
@@ -116,24 +116,24 @@
 
 }
 
-#lastMatches {
+#last-matches {
     text-align: left;
 }
 
-#matchesTable {
+#matches-table {
     display: grid;
     grid-template-rows: 26px;
     grid-auto-rows: 70px;
 }
 
-#matchesTable > *{
+#matches-table > *{
     border-bottom: 1px solid #cccccc;
     display: grid;
     grid-template-columns: 150px 100px 70px 100px 100px;
     align-items: center;
 }
 
-#matchesTable > div#matchesHeader {
+#matches-table > div#matches-header {
     border-bottom: 1px solid #aaaaaa;
 }
 
@@ -143,7 +143,7 @@
     justify-content: left;
 }
 
-.mapIcon {
+.map-icon {
     height: 50px;
     width: 50px;
     background-image: url('../img/map_icons/collection_icon_none.png');
@@ -152,7 +152,7 @@
     padding-right: 5px;
 }
 
-.statusInfo {
+.status-info {
     padding: 4px 8px;
     margin-left: 3px;
     border-radius: 3px;
@@ -164,7 +164,7 @@
     background-color: #e43437;
 }
 
-.loseBorder {
+.lose-border {
     border-color: #e43437;
 }
 
@@ -172,7 +172,7 @@
     background-color: #05da2e;
 }
 
-.winBorder {
+.win-border {
     border-color: #05da2e;
 }
 
@@ -180,7 +180,7 @@
     background-color: #efef00;
 }
 
-.drawBorder {
+.draw-border {
     border-color: #efef00;
 }
 

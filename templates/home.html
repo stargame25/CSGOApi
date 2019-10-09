@@ -11,20 +11,20 @@
 {% block title2 %}Головна{% endblock %}
 {% block content %}
     <div id="profile">
-        <div class="row" id="profileTable">
-            <div class="col" id="profileIcon">
+        <div class="row" id="profile-table">
+            <div class="col" id="profile-icon">
                 <div id="avatar" style="background-image: url({{ me.get('icon') or 'static/img/avatar.png' }});"></div>
             </div>
-            <div class="col" id="profileInfo">
+            <div class="col" id="profile-info">
                 <div class="row">
-                    <div class="col" id="profileName">
+                    <div class="col" id="profile-name">
                         <div id="country"
                              style="background-image: url({{ url_for('static', filename=('img/countries/' + me.get('country')|country + '.png')) }});"></div>
                         <div>{{ me.get("name") or 'Unknown' }}</div>
                     </div>
                 </div>
-                <div class="row" id="profileCSGO">
-                    <div class="row" id="profileCSGOheader">
+                <div class="row" id="profile-csgo">
+                    <div class="row" id="profile-csgo-header">
                         <div class="textL">Режим</div>
                         <div>Звання</div>
                         <div class="textR">Всього</div>
@@ -37,24 +37,24 @@
                         <div class="row">
                             <div>Змагальний</div>
                             <div>
-                                <div id="rank_competitive"
+                                <div id="rank-competitive"
                                      style="background-image: url('static/img/ranks/{{ me.get('competitive').get('rank') | get_c_rank_image }}.png');"></div>
                             </div>
-                            <div class="textR">{{ games_sum | sum }}</div>
-                            <div class="textR">{{ me.get('competitive').get('wins') or 0 }}</div>
-                            <div class="textR">{{ me.get('competitive').get('losses') or 0 }}</div>
-                            <div class="textR">{{ me.get('competitive').get('draws') or 0 }}</div>
+                            <div class="text-r">{{ games_sum | sum }}</div>
+                            <div class="text-r">{{ me.get('competitive').get('wins') or 0 }}</div>
+                            <div class="text-r">{{ me.get('competitive').get('losses') or 0 }}</div>
+                            <div class="text-r">{{ me.get('competitive').get('draws') or 0 }}</div>
                         </div>
                     {% else %}
                         <div class="row">
                             <div>Змагальний</div>
                             <div>
-                                <div id="rank_competitive" class="{{ None | get_c_rank_image }}"></div>
+                                <div id="rank-competitive" class="{{ None | get_c_rank_image }}"></div>
                             </div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
                         </div>
                     {% endif %}
                     {% if me.get('wingman') %}
@@ -62,51 +62,51 @@
                         <div class="row">
                             <div>Напарники</div>
                             <div>
-                                <div id="rank_wingman"
+                                <div id="rank-wingman"
                                      style="background-image: url('static/img/ranks/{{ me.get('wingman').get('rank') | get_w_rank_image }}.png')"></div>
                             </div>
-                            <div class="textR">{{ games_sum | sum }}</div>
-                            <div class="textR">{{ me.get('wingman').get('wins') or 0 }}</div>
-                            <div class="textR">{{ me.get('wingman').get('losses') or 0 }}</div>
-                            <div class="textR">{{ me.get('wingman').get('draws') or 0 }}</div>
+                            <div class="text-r">{{ games_sum | sum }}</div>
+                            <div class="text-r">{{ me.get('wingman').get('wins') or 0 }}</div>
+                            <div class="text-r">{{ me.get('wingman').get('losses') or 0 }}</div>
+                            <div class="text-r">{{ me.get('wingman').get('draws') or 0 }}</div>
                         </div>
                     {% else %}
                         <div class="row">
                             <div>Напарники</div>
                             <div>
-                                <div id="rank_wingman" class="{{ None | get_w_rank_image }}"></div>
+                                <div id="rank-wingman" class="{{ None | get_w_rank_image }}"></div>
                             </div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
-                            <div class="textR">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
+                            <div class="text-r">0</div>
                         </div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    <div id="lastMatches">
-        <div id="matchesTable">
-            <div id="matchesHeader">
-                <div class="mapName">Карта</div>
-                <div class="gameDate">Дата</div>
-                <div class="gameTime">Час</div>
-                <div class="gameDuration">Тривалість</div>
-                <div class="gameStatus">Статус</div>
+    <div id="last-matches">
+        <div id="matches-table">
+            <div id="matches-header">
+                <div class="map-name">Карта</div>
+                <div class="game-date">Дата</div>
+                <div class="game-time">Час</div>
+                <div class="game-duration">Тривалість</div>
+                <div class="game-status">Статус</div>
             </div>
             {% if games %}
             {% for game in games %}
                 <div>
                     <div class="map">
-                        <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
+                        <div class="map-icon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
                         <div>{{ game.get('info').get('gamemode')|get_map_space }}</div>
                     </div>
                     <div>{{ game.get('info').get('date')|get_only_date }}</div>
                     <div>{{ game.get('info').get('date')|get_only_time }}</div>
                     <div>{{ game.get('info').get('play_time') }}</div>
                     <div class="status"><span
-                            class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
+                            class="status-info {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
                     </div>
                 </div>
             {% endfor %}

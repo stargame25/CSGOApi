@@ -11,7 +11,7 @@
     flex-direction: column;
 }
 
-.settingSection {
+.setting-section {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -19,15 +19,15 @@
     margin-right: 20px;
 }
 
-.settingSection > * {
+.setting-section > * {
     margin-bottom: 30px;
 }
 
-.settingSection > div:not(:last-child) {
+.setting-section > div:not(:last-child) {
     margin-right: 40px;
 }
 
-.saveContainer {
+.save-container {
     display: flex;
     width: 100%;
 }
@@ -41,45 +41,45 @@
     display: block;
 }
 
-.gamesSection {
+.games-section {
     width: 400px;
 }
 
-.settingsTitle {
+.settings-title {
     font-size: 16pt;
 }
 
-.setSection {
+.set-section {
     margin-top: 20px;
     margin-left: 10px;
 }
 
-.setSection > input {
+.set-section > input {
     margin-right: 5px;
 }
 
-.setSection > label {
+.set-section > label {
     margin-right: 20px;
 }
 
-.homeSection {
+.home-section {
     width: 400px;
 }
 
-.homeSection > .setSection > input {
+.home-section > .set-section > input {
     width: 30px;
     margin-right: 10px;
     padding: 1px 6px;
 }
 
-.sectionTitle {
+.section-title {
     font-size: 22pt;
     width: 100%;
     border-bottom: 1px solid black;
     margin-bottom: 5px;
 }
 
-.sectionTab {
+.section-tab {
     margin-left: 5px;
 }
 

@@ -44,20 +44,20 @@
     <div id="loader">
         <span>Виконується завантаження ігрових даних...</span>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-        <span>Дані можуть бути відображені некоректно. <a id="loaderContinue"  href="javascript:void(0);" onclick="preloaderContinue()">Продовжити в будь-якому випадку</a></span>
+        <span>Дані можуть бути відображені некоректно. <a id="loader-continue"  href="javascript:void(0);" onclick="preloaderContinue()">Продовжити в будь-якому випадку</a></span>
     </div>
     {% endif %}
-    <div id="Header"></div>
+    <div id="header"></div>
     {% if conn or perm_ban or temp_ban %}
         <div class="bans">
             {% if not conn %}
-                <h1 id="conStat"><span>Неможливо підключитись до мережі: Steam</span></h1>
+                <h1 id="con-stat"><span>Неможливо підключитись до мережі: Steam</span></h1>
             {% endif %}
             {% if perm_ban %}
-                <h1 id="permBan"><span>Вам заборонено змагальний режим по причині: {{ ", ".join(perm_ban) }}</span></h1>
+                <h1 id="perm-ban"><span>Вам заборонено змагальний режим по причині: {{ ", ".join(perm_ban) }}</span></h1>
             {% endif %}
             {% if temp_ban %}
-                <h1 id="tempBan" delta="{{ temp_ban.get('delta') or 0 }}"><span>Змагальний режим буде доступний через:
+                <h1 id="temp-ban" delta="{{ temp_ban.get('delta') or 0 }}"><span>Змагальний режим буде доступний через:
                     {% if temp_ban.get('days') %}
                         <span id="days"><span>{{ temp_ban.get('days') }}</span><span> д.</span></span>{% endif %}
                     {% if temp_ban.get('hours') %}

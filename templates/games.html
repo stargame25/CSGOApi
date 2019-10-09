@@ -15,40 +15,40 @@
 {% block title2 %}Матчі{% endblock %}
 {% block content %}
     <div id="tooltip" style="display: none"></div>
-    <div class="gamesList">
+    <div class="games-list">
         {% if games %}
             {% for game in games %}
-                <div class="gameBlock">
-                    <div class="game {{ "winBorder" if game.get('stat').get('status') == 1 else ("loseBorder" if game.get('stat').get('status') == -1 else "drawBorder") }}">
-                        <div class="gameNumber"><span>{{ loop.index + ((page-1) * page_size) }}.</span></div>
-                        <div class="gameStat">
-                            <div class="gameMode">
+                <div class="game-block">
+                    <div class="game {{ "win-border" if game.get('stat').get('status') == 1 else ("lose-border" if game.get('stat').get('status') == -1 else "draw-border") }}">
+                        <div class="game-number"><span>{{ loop.index + ((page-1) * page_size) }}.</span></div>
+                        <div class="game-stat">
+                            <div class="game-mode">
                                 <div class="mode">{{ game.get('info').get('gamemode')|get_gamemode }}</div>
                                 <div class="map">
-                                    <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
+                                    <div class="map-icon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
                                     <div class="title">{{ game.get('info').get('gamemode')|get_map_space }}</div>
                                 </div>
                             </div>
-                            <div class="gameScore">
-                                <div class="scoreWrapper">
+                            <div class="game-score">
+                                <div class="score-wrapper">
                                     {% set game_score_list = game.get('stat').get('game_score').split(":") %}
-                                    <div class="scoreNumber">{{ game_score_list[0] }}</div>
+                                    <div class="score-number">{{ game_score_list[0] }}</div>
                                     <div style="width: 10px">:</div>
-                                    <div class="scoreNumber">{{ game_score_list[1] }}</div>
+                                    <div class="score-number">{{ game_score_list[1] }}</div>
                                 </div>
                             </div>
-                            <div class="gameTime">
+                            <div class="game-time">
                                 <div class="date">Дата: {{ game.get('info').get('date') }}</div>
                                 <div class="duration">
                                     <span>Тривалість: {{ game.get('info').get('play_time') }}</span>
                                     <span>Пошук: {{ game.get('info').get('search_time') }}</span>
                                 </div>
                             </div>
-                            <div class="gameStatus">
+                            <div class="game-status">
                                 <div class="status">Статус: <span
-                                        class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
+                                        class="status-info {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('status')|game_status_text }}</span>
                                 </div>
-                                <div class="cheatNumber"><span
+                                <div class="cheat-number"><span
                                         class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "" }}">Порушників: <span
                                         class="{{ "unimportant" if (game.get('cheats') or [])|length == 0 else "banned important" }}">{{ (game.get('cheats') or [])|length }}</span></span>
                                 </div>
@@ -59,79 +59,79 @@
                         </div>
                     </div>
                     <div class="details" style="display: none">
-                        <div class="gameDetails">
-                            <div class="gameStatDetails">
-                                <div class="screenWrapper">
+                        <div class="game-details">
+                            <div class="game-stat-details">
+                                <div class="screen-wrapper">
                                     <div class="screen {{ "s_" + game.get('info').get('gamemode')|get_map|lower }}"></div>
                                 </div>
-                                <div class="detailsInfo">
-                                    <div class="mapHeader">
-                                        <div class="mapIcon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
-                                        <span class="mapTitle">Demolition {{ game.get('info').get('gamemode')|get_map_space }}</span>
+                                <div class="details-info">
+                                    <div class="map-header">
+                                        <div class="map-icon {{ game.get('info').get('gamemode')|get_map|lower }}"></div>
+                                        <span class="map-title">Demolition {{ game.get('info').get('gamemode')|get_map_space }}</span>
                                     </div>
-                                    <div class="gameScoreBig"><span
-                                            class="statusInfo {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('game_score') }}</span>
+                                    <div class="game-score-big"><span
+                                            class="status-info {{ game.get('stat').get('status')|game_status }}">{{ game.get('stat').get('game_score') }}</span>
                                     </div>
                                     {% if game.get('info').get('replay') %}
-                                        <div class="demo"><a href="{{ game.get('info').get('replay') }}"><input
-                                                class="downloadDemo"
-                                                type="button"
-                                                value="Download Demo"></a>
+                                        <div class="demo">
+                                            <a href="{{ game.get('info').get('replay') }}">
+                                                <input class="download-demo" type="button" value="Download Demo">
+                                            </a>
                                         </div>
                                     {% endif %}
                                 </div>
                             </div>
                             {% if game.get('round_line') != None %}
-                                <div class="roundsLine">
-                                    <div class="roundsContainer">
-                                        <div class="round rLoseK">
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
+                                <div class="rounds-line">
+                                    <div class="rounds-container">
+                                        <div class="round r-lose-k">
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
                                         </div>
 
-                                        <div class="round rWinK">
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
+                                        <div class="round r-win-k">
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
                                         </div>
 
-                                        <div class="round rWin"></div>
+                                        <div class="round r-win"></div>
 
-                                        <div class="round rWinK">
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
-                                            <div class="killIcon"></div>
+                                        <div class="round r-win-k">
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
+                                            <div class="kill-icon"></div>
                                         </div>
                                     </div>
                                 </div>
                             {% endif %}
-                            <div class="playerBoard">
+                            <div class="player-board">
                                 <div class="row">
                                     {% for team in ['terrorists', 'counter-terrorists'] %}
-                                        <div class="col teamBoard">
-                                            <div class="teamHeader">
-                                                <div class="teamLogo"></div>
+                                        <div class="col team-board">
+                                            <div class="team-header">
+                                                <div class="team-logo"></div>
                                                 <span class="team">{{ team|upper }}</span>
-                                                <div class="teamLogo"></div>
+                                                <div class="team-logo"></div>
                                             </div>
-                                            <div class="flexRow kdaHeader">
+                                            <div class="flex-row kda-header">
                                                 <div class="ping">Ping</div>
-                                                <div class="playerName">Player</div>
+                                                <div class="player-name">Player</div>
                                                 <div class="score">Score</div>
                                                 <div class="kills">Kills</div>
                                                 <div class="assists">Assists</div>
                                                 <div class="deaths">Deaths</div>
                                                 <div class="mvps">MVPs</div>
-                                                <div class="hsPerc">HS %</div>
+                                                <div class="hs-perc">HS %</div>
                                             </div>
                                             {% for player in game.get('stat').get(team) %}
-                                                <div class="flexRow {{ "me" if player.get('player_name') == me.get('name') else "" }}">
+                                                <div class="flex-row {{ "me" if player.get('player_name') == me.get('name') else "" }}">
                                                     <div class="ping">{{ player.get('ping') or 0 }}</div>
-                                                    <div class="playerName">
+                                                    <div class="player-name">
                                                         {% if settings.get('load_icons') %}
                                                             <a href="{{ player.get('profile_link') or "" }}">
-                                                                <img class="playerIcon" src="#"
+                                                                <img class="player-icon" src="#"
                                                                      temp="{{ player.get('player_icon') or "" }}"
                                                                      alt="">
                                                             </a>
@@ -149,7 +149,7 @@
                                                     <div class="assists">{{ player.get('assists') or 0 }}</div>
                                                     <div class="deaths">{{ player.get('deaths') or 0 }}</div>
                                                     <div class="mvps">{{ player.get('mvps') or 0 }}</div>
-                                                    <div class="hsPerc">{{ player.get('hs_percent') or 0 }}</div>
+                                                    <div class="hs-perc">{{ player.get('hs_percent') or 0 }}</div>
                                                 </div>
                                             {% endfor %}
                                         </div>

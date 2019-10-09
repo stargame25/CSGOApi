@@ -12,7 +12,7 @@
     <title>Вхід - CSGOHelper</title>
 </head>
 <body>
-<video autoplay muted loop id="bgVideo">
+<video autoplay muted loop id="bg-video">
     <source src={{ url_for('static', filename='img/nuke720p.webm') }} type="video/mp4">
 </video>
 <div id="app">
@@ -37,21 +37,21 @@
                         <img src="#" alt="">
                     </div>
                     <div>
-                        <input id="captchaInput" type="text" maxlength="6" required/>
+                        <input id="captcha-input" type="text" maxlength="6" required/>
                     </div>
                 </div>
                 <div id="submit">
-                    <input class="btn" id="submitButton" type="button" value="OK" onclick="loginIn()">
+                    <input class="btn" id="submit-button" type="button" value="OK" onclick="loginIn()">
                 </div>
             </div>
             <div id="f2a" hidden>
                 <label class="title">F2A code</label>
                 <div class="field">
                     <i class="fas fa-key"></i>
-                    <input type="text" name="f2a_code" id="f2aCode" name="f2aCode" maxlength="5" required/>
+                    <input type="text" id="f2a-code" name="f2a-code" maxlength="5" required/>
                 </div>
                 <div id="submit">
-                    <input class="btn" id="submitF2A" type="button" value="OK" onclick="twoFactorIn()">
+                    <input class="btn" id="submit-f2a" type="button" value="OK" onclick="twoFactorIn()">
                 </div>
             </div>
             <div id="error" hidden><span class="animated fadeIn"></span></div>

@@ -11,7 +11,7 @@
     display: none;
 }
 
-#bgVideo {
+#bg-video {
     position: fixed;
     left: 0;
     top: 0;
@@ -76,7 +76,7 @@ body {
     height: auto;
 }
 
-#f2aCode {
+#f2a-code {
     text-transform: uppercase;
     width: 60px;
 }
@@ -128,7 +128,7 @@ form {
     margin-bottom: 8px;
 }
 
-#captchaInput {
+#captcha-input {
     width: 70px;
     padding: 7px;
     text-transform: uppercase;

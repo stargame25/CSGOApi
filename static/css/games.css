@@ -1,8 +1,8 @@
-.gamesList {
+.games-list {
     width: 100%;
 }
 
-.gameBlock:not(:last-child) {
+.game-block:not(:last-child) {
     margin-bottom: 20px;
 }
 
@@ -52,7 +52,7 @@
     opacity: 0;
 }
 
-.gameStat {
+.game-stat {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -61,7 +61,7 @@
     justify-content: space-between;
 }
 
-.gameStat > div {
+.game-stat > div {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -78,7 +78,7 @@
     padding-right: 20px;
 }
 
-.mapIcon {
+.map-icon {
     height: 50px;
     width: 50px;
     background-image: url('../img/map_icons/collection_icon_none.png');
@@ -96,7 +96,7 @@
     border-radius: 6px;
 }
 
-.screenWrapper {
+.screen-wrapper {
     width: 528px;
     height: 200px;
     padding: 0 5px;
@@ -118,35 +118,35 @@
     font-weight: 400;
 }
 
-.gameMode {
+.game-mode {
     width: 200px;
 }
 
-.gameMode > div {
+.game-mode > div {
 }
 
-.gameTime {
+.game-time {
     width: 300px
 }
 
-.gameTime > div {
+.game-time > div {
 }
 
-.gameStatus {
+.game-status {
     width: 175px;
 }
 
-.scoreWrapper{
+.score-wrapper{
     display: flex;
     text-align: center;
 }
 
-.scoreNumber{
+.score-number{
     text-align: center;
     width: 30px;
 }
 
-.gameNumber {
+.game-number {
     text-align: center;
     width: 50px;
     display: flex;
@@ -158,7 +158,7 @@
     z-index: 1000;
 }
 
-.gameStat {
+.game-stat {
     flex: 1;
 }
 
@@ -190,7 +190,7 @@
     color: #990008 !important;
 }
 
-.statusInfo {
+.status-info {
     padding: 4px 8px;
     margin-left: 3px;
     border-radius: 3px;
@@ -202,7 +202,7 @@
     background-color: #e43437;
 }
 
-.loseBorder {
+.lose-border {
     border-color: #e43437;
 }
 
@@ -210,7 +210,7 @@
     background-color: #05da2e;
 }
 
-.winBorder {
+.win-border {
     border-color: #05da2e;
 }
 
@@ -218,7 +218,7 @@
     background-color: #efef00;
 }
 
-.drawBorder {
+.draw-border {
     border-color: #efef00;
 }
 
@@ -229,7 +229,7 @@
     z-index: 1;
 }
 
-.gameDetails {
+.game-details {
     overflow-y: hidden;
     max-width: 1400px;
     width: 90%;
@@ -238,7 +238,7 @@
     border-top: none;
 }
 
-.playerIcon {
+.player-icon {
     height: 32px;
     border-radius: 2px;
     margin-right: 4px;
@@ -253,7 +253,7 @@
     white-space: nowrap;
 }
 
-.playerName {
+.player-name {
     width: 200px;
     display: flex;
     align-self: center;
@@ -263,7 +263,7 @@
     font-weight: bold;
 }
 
-.gameStatDetails {
+.game-stat-details {
     width: 100%;
     min-height: 200px;
     padding-bottom: 20px;
@@ -273,13 +273,13 @@
     justify-content: space-around;
 }
 
-.roundsLine {
+.rounds-line {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.roundsContainer {
+.rounds-container {
     display: flex;
     flex-direction: row;
 }
@@ -292,33 +292,33 @@
     margin-right: 5px;
 }
 
-.rLose {
+.r-lose {
     border-bottom: 5px solid #e43437;
 }
 
-.rWin {
+.r-win {
     border-bottom: 5px solid #05da2e;
 }
 
-.rLoseK {
+.r-lose-k {
     border-bottom: 5px solid #e43437;
     background-image: linear-gradient(#eaeaea, rgba(255, 0, 2, 0.19)); /* Standard syntax (must be last) */
 }
 
-.rWinK {
+.r-win-k {
     background-image: linear-gradient(#eaeaea, rgba(0, 255, 2, 0.19)); /* Standard syntax (must be last) */
     border-bottom: 5px solid #05da2e;
 }
 
-.killIcon {
+.kill-icon {
     width: 36px;
     height: 36px;
     background-image: url('../img/status-dead.png');
     background-size: 36px;
 }
 
-.detailsInfo {
-    padding: 0px 5px;
+.details-info {
+    padding: 0 5px;
     margin-top: 10px;
     width: 528px;
 }
@@ -351,7 +351,7 @@
     flex-flow: wrap;
 }
 
-.flexRow {
+.flex-row {
     display: flex;
     flex-direction: row;
     height: 32px;
@@ -366,14 +366,14 @@
     margin-left: 10px;
 }
 
-.game > .gameStat > div.gameScore {
+.game > .game-stat > div.game-score {
     font-size: 18pt;
     font-weight: 300;
     justify-content: center;
     align-items: center;
 }
 
-.teamBoard {
+.team-board {
     margin-top: 20px;
     min-width: 200px;
     padding-right: 5px;
@@ -421,34 +421,34 @@
     align-self: center;
 }
 
-.hsPerc {
+.hs-perc {
     width: 46px;
     text-align: right;
     align-self: center;
 }
 
-.kdaHeader {
+.kda-header {
     /*border-bottom: 1px solid black;*/
     margin-bottom: 5px;
 }
 
-.teamHeader {
+.team-header {
     text-align: center;
     border-bottom: 1px solid black;
     display: flex;
     justify-content: center;
 }
 
-.mapHeader {
+.map-header {
     display: flex;
     justify-content: center;
 }
 
-.mapHeader > * {
+.map-header > * {
     margin-right: 10px;
 }
 
-.gameScoreBig {
+.game-score-big {
     margin-top: 20px;
     text-align: center;
     font-size: 22pt;
@@ -461,7 +461,7 @@
     margin-top: 85px;
 }
 
-.downloadDemo {
+.download-demo {
     background-color: #eaeaea;
     border: 1px solid black;
     border-radius: 5px;
@@ -470,13 +470,13 @@
     font-weight: 100;
 }
 
-.mapTitle {
+.map-title {
     font-weight: 300;
     font-size: 32pt;
     align-self: center;
 }
 
-.teamLogo {
+.team-logo {
     height: 30px;
     width: 30px;
     background-size: 30px;

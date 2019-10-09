@@ -1,18 +1,18 @@
 function displayGame(e) {
     let target = e.path[5].getElementsByClassName("details")[0];
-    let animTarget = e.path[5].getElementsByClassName("gameDetails")[0];
+    let animTarget = e.path[5].getElementsByClassName("game-details")[0];
     let arrow = e.path[1];
     let icon = e.target;
     e.target.setAttribute("onclick", "");
     if (target.style.display === "flex") {
-        arrow.className = "flipAnimBack";
-        animTarget.className = "gameDetails animated fadeInDownSlideBack";
+        arrow.className = "flip-anim-back";
+        animTarget.className = "game-details animated fade-in-down-slide-back";
         unloadProfileImages(target);
         setTimeout(() => {target.style.display = 'none'}, 1100);
     }
     else {
-        arrow.className = "flipAnim";
-        animTarget.className = "gameDetails animated fadeInDownSlide";
+        arrow.className = "flip-anim";
+        animTarget.className = "game-details animated fade-in-down-slide";
         target.style.display = 'flex';
         loadProfileImages(target);
     }
@@ -67,9 +67,9 @@ function unloadProfileImages(e) {
     list = [...document.getElementsByClassName("game")];
     list.forEach((item, index) => {
         if(list.length > 50){
-            setTimeout(() => {item.className = item.className + " animated zoomFadeIn", item.style.opacity = 1}, (5000/list.length * index));
+            setTimeout(() => {item.className = item.className + " animated zoom-fade-in", item.style.opacity = 1}, (5000/list.length * index));
         } else {
-            setTimeout(() => {item.className = item.className + " animated zoomFadeIn", item.style.opacity = 1}, (index * 100));
+            setTimeout(() => {item.className = item.className + " animated zoom-fade-in", item.style.opacity = 1}, (index * 100));
         }
     })
 })();
@@ -78,10 +78,10 @@ function unloadProfileImages(e) {
     list = [...document.getElementById("paginator").getElementsByTagName("div")];
     list.forEach((item, index) => {
         setTimeout(() => {
-            item.className = item.className + " fadeIn";
+            item.className = item.className + " fade-in";
             setTimeout(() => {
                 item.style.opacity = 1;
-                item.className = item.className.replace("fadeIn", "swingHover");
+                item.className = item.className.replace("fade-in", "swing-hover");
             }, 1000);
         }, (index * 200));
     })

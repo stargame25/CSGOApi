@@ -1,4 +1,4 @@
-const time = document.getElementById("tempBan") ? Number(document.getElementById("tempBan").getAttribute("delta")) : null;
+const time = document.getElementById("temp-ban") ? Number(document.getElementById("temp-ban").getAttribute("delta")) : null;
 const days = document.getElementById("days");
 const hours = document.getElementById("hours");
 const min = document.getElementById("minutes");

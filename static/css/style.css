@@ -54,7 +54,7 @@ a {
     z-index: 10;
 }
 
-#loaderContinue{
+#loader-continue{
     color: rgba(240, 240, 240, 1);
 }
 
@@ -64,7 +64,7 @@ a {
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
-#Header {
+#header {
     display: none;
 }
 
@@ -118,7 +118,7 @@ a {
     margin-right: 20px;
 }
 
-#conStat {
+#con-stat {
     color: black;
     height: auto;
     background-color: rgba(72, 200, 255, 1);
@@ -128,11 +128,11 @@ a {
     margin-left: 210px;
 }
 
-#conStat > span {
+#con-stat > span {
     overflow-wrap: break-word;
 }
 
-#permBan {
+#perm-ban {
     color: black;
     height: auto;
     background-color: rgba(230, 0, 0, 1);
@@ -142,11 +142,11 @@ a {
     margin-left: 210px;
 }
 
-#permBan > span {
+#perm-ban > span {
     overflow-wrap: break-word;
 }
 
-#tempBan {
+#temp-ban {
     color: black;
     height: auto;
     background-color: #F3DA0B;
@@ -156,7 +156,7 @@ a {
     margin-left: 210px;
 }
 
-#tempBan > span {
+#temp-ban > span {
     overflow-wrap: break-word;
 }
 
@@ -171,7 +171,7 @@ a {
 }
 
 @media only screen and (max-device-width: 1055px) {
-    #Header {
+    #header {
         display: block;
         height: 70px;
         width: 100vw;
@@ -199,7 +199,7 @@ a {
         padding: 0;
     }
 
-    #Header {
+    #header {
         position: fixed;
         display: block;
     }
@@ -210,30 +210,30 @@ a {
         margin-right: 10px;
     }
 
-    #conStat {
+    #con-stat {
         margin-left: 0;
         line-height: 0.5em;
     }
 
-    #conStat > span {
+    #con-stat > span {
         font-size: 12pt;
     }
 
-    #permBan {
+    #perm-ban {
         margin-left: 0;
         line-height: 0.5em;
     }
 
-    #permBan > span {
+    #perm-ban > span {
         font-size: 12pt;
     }
 
-    #tempBan {
+    #temp-ban {
         margin-left: 0;
         line-height: 0.5em;
     }
 
-    #tempBan > span {
+    #temp-ban > span {
         font-size: 12pt;
     }
 }

@@ -7,15 +7,15 @@ let usernameInput = document.getElementById("username");
 usernameInput.onkeypress = enterTrigger;
 let passwordInput = document.getElementById("password");
 passwordInput.onkeypress = enterTrigger;
-let captchaInput = document.getElementById("captchaInput");
+let captchaInput = document.getElementById("captcha-input");
 captchaInput.onkeypress = enterTrigger;
-let codeInput = document.getElementById("f2aCode");
+let codeInput = document.getElementById("f2a-code");
 codeInput.onkeypress = enterTriggerF2A;
 let errorDiv = document.getElementById("error");
 let captchaDiv = document.getElementById("captcha");
 let mod, exp, type, captchaGid, captchaUrl, captcha;
-let submitButton = document.getElementById("submitButton");
-let submitButtonF2A = document.getElementById("submitF2A");
+let submitButton = document.getElementById("submit-button");
+let submitButtonF2A = document.getElementById("submit-f2a");
 let loader = document.getElementById("loader");
 
 function validLogin(){

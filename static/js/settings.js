@@ -1,14 +1,14 @@
 let xhr = new XMLHttpRequest();
 function submit(){
     let form = {};
-    let sections = [...document.querySelectorAll('.settingSection > div')];
+    let sections = [...document.querySelectorAll('.setting-section > div')];
     sections.forEach(category => {
         let data = serialize(category.querySelectorAll("[name]:not(meta)"));
         let temp = {};
         for(let key in data){
             temp[key] = data[key];
         }
-        form[category.className.replace("Section", "").trim()] = temp;
+        form[category.className.replace("section", "").trim()] = temp;
     });
     console.log(JSON.stringify(form));
     xhr.open('POST', '/settings');
